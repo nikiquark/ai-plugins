@@ -1,0 +1,133 @@
+site_name: ai-plugins
+site_description: Документация marketplace плагинов Claude Code nikiquark-ai-plugins
+site_url: https://nikiquark.github.io/ai-plugins/
+repo_url: https://github.com/nikiquark/ai-plugins
+repo_name: nikiquark/ai-plugins
+edit_uri: edit/main/docs/
+copyright: MIT · nikiquark
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Тёмная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Светлая тема
+
+plugins:
+  - search:
+      lang: [ru, en]
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+nav:
+  - Главная: index.md
+  - Начало работы:
+      - Установка: getting-started/installation.md
+      - Quickstart за 2 минуты: getting-started/quickstart.md
+      - Первый проект: getting-started/first-project.md
+      - Зависимости: getting-started/requirements.md
+  - Концепции:
+      - Как устроен пайплайн: concepts/pipeline.md
+      - Контекст и /clear: concepts/context.md
+      - Состояние и возобновление: concepts/state.md
+      - Точки решения ✋: concepts/gates.md
+  - dev-core:
+      - dev-core/index.md
+      - Скиллы:
+          - grill-me: dev-core/skills/grill-me.md
+          - review-loop: dev-core/skills/review-loop.md
+          - reuse-first: dev-core/skills/reuse-first.md
+      - git-snapshot: dev-core/git-snapshot.md
+      - Хук context-guard: dev-core/context-guard.md
+      - MCP Context7: dev-core/context7.md
+  - web-pipeline:
+      - web-pipeline/index.md
+      - Команды:
+          - new-project: web-pipeline/commands/new-project.md
+          - change: web-pipeline/commands/change.md
+          - deploy: web-pipeline/commands/deploy.md
+          - secure-maintain: web-pipeline/commands/secure-maintain.md
+          - init: web-pipeline/commands/init.md
+      - Фазы реализации D1–D5: web-pipeline/delivery.md
+      - Субагенты:
+          - web-pipeline/agents/index.md
+          - architect: web-pipeline/agents/architect.md
+          - designer: web-pipeline/agents/designer.md
+          - backend-dev: web-pipeline/agents/backend-dev.md
+          - frontend-dev: web-pipeline/agents/frontend-dev.md
+          - qa-engineer: web-pipeline/agents/qa-engineer.md
+          - code-reviewer: web-pipeline/agents/code-reviewer.md
+          - security-reviewer: web-pipeline/agents/security-reviewer.md
+          - design-critic: web-pipeline/agents/design-critic.md
+          - ops-auditor: web-pipeline/agents/ops-auditor.md
+      - Навыки-знания:
+          - frontend-style: web-pipeline/skills/frontend-style.md
+          - backend-standards: web-pipeline/skills/backend-standards.md
+          - testing-standards: web-pipeline/skills/testing-standards.md
+          - ansible-conventions: web-pipeline/skills/ansible-conventions.md
+      - Хуки: web-pipeline/hooks.md
+      - Конфигурация web-pipeline.json: web-pipeline/configuration.md
+      - anti_slop.py: web-pipeline/anti-slop.md
+      - Шаблоны: web-pipeline/templates.md
+      - MCP Playwright: web-pipeline/playwright.md
+      - Файлы в проекте: web-pipeline/project-files.md
+  - Справочник:
+      - Все команды: reference/commands.md
+      - Все агенты: reference/agents.md
+      - Переменные окружения: reference/environment.md
+      - FAQ и проблемы: reference/faq.md
+  - Разработка:
+      - Соглашения: development/conventions.md
+      - Новый плагин: development/new-plugin.md
+      - Валидация и версии: development/validation.md
+      - Документация: development/docs.md
