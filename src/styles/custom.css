@@ -1,13 +1,34 @@
-details {
+/* Purple accent on a soft blue-grey background. */
+:root {
+  --sl-color-accent-low: #2a1659;
+  --sl-color-accent: #7c3aed;
+  --sl-color-accent-high: #c9b3ff;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #e4d8ff;
+  --sl-color-accent: #8a3ffc;
+  --sl-color-accent-high: #5b21b6;
+  --sl-color-white: #3d4256;
+  --sl-color-text: #4a4f66;
+  --sl-color-bg: #eef0f5;
+  --sl-color-bg-nav: #dfe3ec;
+  --sl-color-bg-sidebar: #eef0f5;
+  --sl-color-bg-inline-code: #dfe3ec;
+  --sl-color-hairline-light: #d4d8e3;
+  --sl-color-hairline: #cbd0dd;
+}
+
+.sl-markdown-content details {
   border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   margin-block: 0.75rem;
 }
-details > summary {
+.sl-markdown-content details > summary {
   cursor: pointer;
   font-weight: 600;
 }
-details[open] > summary {
+.sl-markdown-content details[open] > summary {
   margin-bottom: 0.5rem;
 }

@@ -26,6 +26,7 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       plugins: [starlightLinksValidator()],
       sidebar: [
+        { label: 'Home', link: '/' },
         {
           label: 'Начало работы',
           items: [

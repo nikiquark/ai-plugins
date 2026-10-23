@@ -1,0 +1,13 @@
+{
+  "name": "idea-pipeline",
+  "displayName": "Idea Pipeline",
+  "version": "0.1.0",
+  "description": "Validate a product idea before building it: sourced market, competitors and customer research, value proposition and go-to-market, red team, KTH readiness levels and pre-registered experiments",
+  "author": {
+    "name": "nikiquark",
+    "email": "nikiquark@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["idea", "validation", "market-research", "competitors", "strategy", "readiness"],
+  "dependencies": ["dev-core"]
+}

@@ -15,6 +15,11 @@
       "name": "web-pipeline",
       "source": "./plugins/web-pipeline",
       "description": "Web projects from idea to production: spec, message and SEO, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance"
+    },
+    {
+      "name": "idea-pipeline",
+      "source": "./plugins/idea-pipeline",
+      "description": "Validate a product idea before building it: sourced market, competitors and customer research, value proposition and go-to-market, red team, KTH readiness levels and pre-registered experiments"
     }
   ]
 }
