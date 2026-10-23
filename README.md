@@ -47,11 +47,11 @@ claude plugin validate .                                                  # mark
 claude --plugin-dir plugins/dev-core --plugin-dir plugins/web-pipeline    # запуск без установки
 ```
 
-Документация собирается из `docs/` с помощью MkDocs Material:
+Документация собирается из `src/content/docs/` с помощью Astro Starlight:
 
 ```bash
-pip install -r requirements-docs.txt
-mkdocs serve
+npm ci
+npm run dev
 ```
 
 Соглашения описаны в [CLAUDE.md](CLAUDE.md) и в разделе [Разработка](https://nikiquark.github.io/ai-plugins/development/conventions/). При публикации изменений поднимайте `version` в `plugin.json`: при установке с GitHub плагины закреплены на версии.

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Fail when a plugin component has no page in docs/.
+"""Fail when a plugin component has no page in src/content/docs/.
 
 Expected pages:
-  plugins/<p>/skills/<s>/SKILL.md  ->  docs/<p>/skills/<s>.md or docs/<p>/commands/<s>.md
-  plugins/<p>/agents/<a>.md        ->  docs/<p>/agents/<a>.md
-  plugins/<p>/bin/<b>              ->  docs/<p>/<b>.md
+  plugins/<p>/skills/<s>/SKILL.md  ->  src/content/docs/<p>/skills/<s>.md or src/content/docs/<p>/commands/<s>.md
+  plugins/<p>/agents/<a>.md        ->  src/content/docs/<p>/agents/<a>.md
+  plugins/<p>/bin/<b>              ->  src/content/docs/<p>/<b>.md
 
-Only checks that the pages exist; mkdocs build --strict checks that they are in the nav.
+Only checks that the pages exist; npm run build checks that links between pages resolve.
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "docs"
+DOCS = ROOT / "src" / "content" / "docs"
 
 
 def expected() -> list[tuple[Path, list[Path]]]:

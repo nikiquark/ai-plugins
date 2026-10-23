@@ -10,6 +10,6 @@ A Claude Code plugin marketplace (`nikiquark-ai-plugins`). Plugins live in `plug
 - `${CLAUDE_PLUGIN_ROOT}` is substituted in skill and agent text and is exported to hooks, but it is **not** present in the Bash tool's environment. Executables that Claude must run go in the plugin's `bin/`.
 - Installed plugins live in per-version cache directories, so never reference a sibling plugin by a relative path.
 - Every pipeline keeps its resumable state in `.claude/state/pipeline.json` in the project. dev-core's context-guard hook keys off that file. Orchestrator skills must be resumable from the state file and the docs, so that `/clear` and re-running the command loses nothing.
-- Skill and agent bodies are written in English. User-facing docs (README and `docs/`) are written in Russian.
+- Skill and agent bodies are written in English. User-facing docs (README and `src/content/docs/`) are written in Russian.
 - After any change, run `claude plugin validate .` and bump `version` in the changed plugin's `plugin.json`.
-- The docs site in `docs/` (MkDocs Material, published to GitHub Pages) is written by hand. When you change a plugin, update its pages in the same change: every skill, agent and `bin/` file has its own page, and new pages go into `nav` in `mkdocs.yml`. Check with `python3 scripts/check-docs.py && mkdocs build --strict`.
+- The docs site in `src/content/docs/` (Astro Starlight, published to GitHub Pages) is written by hand. When you change a plugin, update its pages in the same change: every skill, agent and `bin/` file has its own page, and new pages go into `sidebar` in `astro.config.mjs`. Check with `python3 scripts/check-docs.py && npm run build`.
