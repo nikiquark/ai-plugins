@@ -45,7 +45,8 @@ scripts/check-docs.py
 ## Агенты
 
 - Плагинные агенты игнорируют `permissionMode`, `hooks` и `mcpServers` во frontmatter.
-- Агент только на чтение задаётся через `disallowedTools: Write, Edit, NotebookEdit, Agent`.
+- Чистый ревьюер, который никогда не пишет файлы (например, `web-pipeline:code-reviewer`), делается агентом только на чтение через `disallowedTools: Write, Edit, NotebookEdit, Agent`.
+- Агент, который в одном режиме ревьюит, а в другом пишет свои файлы (например, `idea-pipeline:red-team` и `idea-pipeline:fact-checker`), получает список `tools`, а запрет на правки в режиме ревью задаётся в тексте агента.
 - Модель и effort задаются во frontmatter под задачу агента. Навыки предзагружаются через `skills:`, а тело агента всё равно просит загрузить их инструментом `Skill`, если их нет в контексте.
 
 ## Пути

@@ -8,7 +8,7 @@ title: "git-snapshot"
 |---|---|
 | Вызов | `git-snapshot` или `git snapshot` |
 | Где доступен | В PATH инструмента Bash, пока включён `dev-core` |
-| Кто использует | [`review-loop`](skills/review-loop.md), [`new-project`](../web-pipeline/commands/new-project.md), [`change`](../web-pipeline/commands/change.md) |
+| Кто использует | [`review-loop`](skills/review-loop.md), [`new-project`](../web-pipeline/commands/new-project.md), [`change`](../web-pipeline/commands/change.md), [`new-idea`](../idea-pipeline/commands/new-idea.md) |
 | Исходник | `plugins/dev-core/bin/git-snapshot` |
 
 ## Зачем

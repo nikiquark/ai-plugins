@@ -13,7 +13,7 @@ Idea: $ARGUMENTS
 
 ## Resume first
 
-If `.claude/state/pipeline.json` exists, read it, tell the user which phase the last run stopped at, and continue from there instead of starting over.
+If `.claude/state/pipeline.json` exists with `"flow": "new-project"`, read it, tell the user which phase the last run stopped at, and continue from there instead of starting over. If it exists with another `flow`, another pipeline is in progress in this project: tell the user and stop until they finish that run or delete the file.
 
 ## Phase 0: Bootstrap
 
@@ -24,6 +24,8 @@ If `.claude/state/pipeline.json` exists, read it, tell the user which phase the 
 ## Phase 1: Requirements
 
 Invoke the `dev-core:grill-me` skill on the idea. Output file: `docs/spec.md`, using the template at `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`.
+
+If `docs/idea/memo.md` exists, the idea was researched with idea-pipeline. Give grill-me the Key findings of `docs/idea/customers.md`, `competitors.md` and `strategy.md` as known facts: the segments and jobs become the personas, the value proposition and positioning feed the message, the competitors fill the alternatives, and validated evidence from `docs/idea/evidence/` is the proof. Ask only about what the research left open.
 
 The design tree must cover at least: who the users are and what job they hire this for, **the one thought a visitor must take away and the one action they should take**, the proof the user can back that up with, competitors or what people do today instead, whether the site must be found in search or is a closed app, the user stories with **testable acceptance criteria**, non-goals, the data and its sensitivity (personal data? payments?), integrations, auth model, expected load, languages and locales, hosting constraints (the user's own servers via Ansible), budget for paid services, and the visual mood. For the mood, ask for references they like and hate, not adjectives.
 

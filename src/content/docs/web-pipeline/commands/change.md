@@ -18,6 +18,7 @@ title: "change"
 ```mermaid
 flowchart TB
   R{pipeline.json<br/>с flow=change?} -- да --> RES[Продолжить]
+  R -- другой flow --> STOP[Сообщить и остановиться]
   R -- нет --> A0
   A0[0. Аудит: init при необходимости,<br/>architect в audit mode, ветка, pipeline.json] --> A1
   A1[1. grill-me только об изменении → docs/changes/NNNN-slug.md] --> PUB{Меняются публичные<br/>страницы или тексты?}
@@ -30,6 +31,8 @@ flowchart TB
   UI -- новые экраны / редизайн --> C[designer: 2–3 концепта] --> G2{{✋ GATE 2}} --> D
   D[git-snapshot → D2–D5<br/>D1 только если make check нет]
 ```
+
+Если `pipeline.json` есть, но с другим `flow`, в проекте идёт другой пайплайн: оркестратор сообщает об этом и останавливается, пока вы не завершите тот запуск или не удалите файл.
 
 ### Фаза 0. Аудит: факты раньше вопросов
 

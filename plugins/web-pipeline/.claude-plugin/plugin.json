@@ -1,7 +1,7 @@
 {
   "name": "web-pipeline",
   "displayName": "Web Pipeline",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Web projects from idea to production: spec, message and SEO, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance",
   "author": {
     "name": "nikiquark",

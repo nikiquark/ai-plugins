@@ -2,7 +2,7 @@
 title: "dev-core"
 ---
 
-Общие компоненты для всех пайплайнов. Плагин не привязан к предметной области: на нём строятся доменные плагины вроде [web-pipeline](../web-pipeline/index.md), но его можно использовать и отдельно.
+Общие компоненты для всех пайплайнов. Плагин не привязан к предметной области: на нём строятся доменные плагины вроде [web-pipeline](../web-pipeline/index.md) и [idea-pipeline](../idea-pipeline/index.md), но его можно использовать и отдельно.
 
 ```bash
 claude plugin install dev-core@nikiquark-ai-plugins

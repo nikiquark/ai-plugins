@@ -115,6 +115,41 @@ export default defineConfig({
           ],
         },
         {
+          label: 'idea-pipeline',
+          items: [
+            page('Обзор', 'idea-pipeline'),
+            {
+              label: 'Команды',
+              items: ['new-idea', 'evidence', 'readiness', 'interview-kit'].map((c) =>
+                page(c, `idea-pipeline/commands/${c}`),
+              ),
+            },
+            {
+              label: 'Субагенты',
+              items: [
+                page('Обзор', 'idea-pipeline/agents'),
+                ...[
+                  'market-analyst',
+                  'competitor-analyst',
+                  'customer-researcher',
+                  'strategist',
+                  'red-team',
+                  'fact-checker',
+                ].map((a) => page(a, `idea-pipeline/agents/${a}`)),
+              ],
+            },
+            {
+              label: 'Навыки-знания',
+              items: ['research-standards', 'readiness-levels'].map((s) =>
+                page(s, `idea-pipeline/skills/${s}`),
+              ),
+            },
+            page('idea-claims', 'idea-pipeline/idea-claims'),
+            page('Конфигурация idea-pipeline.json', 'idea-pipeline/configuration'),
+            page('Файлы в проекте', 'idea-pipeline/project-files'),
+          ],
+        },
+        {
           label: 'Справочник',
           items: [
             page('Все команды', 'reference/commands'),

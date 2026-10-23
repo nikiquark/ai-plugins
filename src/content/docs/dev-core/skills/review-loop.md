@@ -8,7 +8,7 @@ title: "review-loop"
 |---|---|
 | Вызов | `/dev-core:review-loop [max-rounds]` |
 | Автовызов | Да, когда оркестратор или вы хотите ревью кода субагентами с исправлениями |
-| Кто использует | Фаза [D4](../../web-pipeline/delivery.md#d4-ограниченное-ревью) web-pipeline |
+| Кто использует | Фаза [D4](../../web-pipeline/delivery.md#d4-ограниченное-ревью) web-pipeline, фаза 7 [`new-idea`](../../idea-pipeline/commands/new-idea.md#фаза-7-ревью) |
 | Состояние | `.claude/state/review-loop.json` |
 | Исходник | `plugins/dev-core/skills/review-loop/SKILL.md` |
 
@@ -100,7 +100,7 @@ flowchart TB
 | **major** | Явное нарушение стандартов проекта, которое дорого обойдётся позже: дублирование существующего кода, нет теста на основной путь, самописная версия того, что уже даёт зависимость |
 | **minor** | Стиль, имена, желательные рефакторинги |
 
-Префиксы id: `CR-` ([code-reviewer](../../web-pipeline/agents/code-reviewer.md)), `SEC-` ([security-reviewer](../../web-pipeline/agents/security-reviewer.md)), `DES-` ([design-critic](../../web-pipeline/agents/design-critic.md)).
+Префиксы id: `CR-` ([code-reviewer](../../web-pipeline/agents/code-reviewer.md)), `SEC-` ([security-reviewer](../../web-pipeline/agents/security-reviewer.md)), `DES-` ([design-critic](../../web-pipeline/agents/design-critic.md)), `FC-` ([fact-checker](../../idea-pipeline/agents/fact-checker.md)), `RT-` ([red-team](../../idea-pipeline/agents/red-team.md)).
 
 ## Состояние
 

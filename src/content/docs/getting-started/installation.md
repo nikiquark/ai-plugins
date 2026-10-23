@@ -2,7 +2,7 @@
 title: "Установка"
 ---
 
-Плагины распространяются как marketplace `nikiquark-ai-plugins`. Сначала подключается marketplace, затем из него ставятся плагины. `web-pipeline` объявляет `dev-core` зависимостью, поэтому `dev-core` ставится автоматически.
+Плагины распространяются как marketplace `nikiquark-ai-plugins`. Сначала подключается marketplace, затем из него ставятся плагины. `web-pipeline` и `idea-pipeline` объявляют `dev-core` зависимостью, поэтому `dev-core` ставится автоматически.
 
 Каждую команду ниже можно выполнить в терминале (`claude plugin …`) или внутри сессии Claude Code (`/plugin …`).
 
@@ -15,7 +15,13 @@ claude plugin marketplace add nikiquark/ai-plugins
 claude plugin install web-pipeline@nikiquark-ai-plugins
 ```
 
-Если нужен только общий набор без веб-пайплайна:
+Для проверки идей до разработки:
+
+```bash
+claude plugin install idea-pipeline@nikiquark-ai-plugins
+```
+
+Если нужен только общий набор без пайплайнов:
 
 ```bash
 claude plugin install dev-core@nikiquark-ai-plugins
@@ -45,10 +51,10 @@ claude plugin install web-pipeline@nikiquark-ai-plugins
 Для разработки и разовых экспериментов плагины можно подключить только на время одной сессии. Запускайте из корня клона:
 
 ```bash
-claude --plugin-dir plugins/dev-core --plugin-dir plugins/web-pipeline
+claude --plugin-dir plugins/dev-core --plugin-dir plugins/web-pipeline --plugin-dir plugins/idea-pipeline
 ```
 
-Флаг `--plugin-dir` повторяется для каждого плагина. Подключайте `dev-core` вместе с `web-pipeline`, иначе `web-pipeline` не найдёт свою зависимость.
+Флаг `--plugin-dir` повторяется для каждого плагина. Подключайте `dev-core` вместе с доменными плагинами, иначе они не найдут свою зависимость.
 
 ## Область установки
 

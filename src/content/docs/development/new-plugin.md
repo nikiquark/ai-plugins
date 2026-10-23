@@ -58,7 +58,7 @@ plugins/foo-pipeline/
 
 ## 5. Агенты
 
-- Модель и effort под задачу; ревьюеры — с `disallowedTools`.
+- Модель и effort под задачу; чистые ревьюеры — с `disallowedTools`, ревьюеры с режимами записи — со списком `tools` ([Соглашения](conventions.md#агенты)).
 - Самодостаточные инструкции: агент не видит диалог.
 - Формат отчёта, который удобно разбирать оркестратору (для ревьюеров — вердикт `review-loop`).
 
@@ -74,7 +74,7 @@ plugins/foo-pipeline/
 ```bash
 claude plugin validate .
 claude --plugin-dir plugins/dev-core --plugin-dir plugins/foo-pipeline
-python3 scripts/check-docs.py && mkdocs build --strict
+python3 scripts/check-docs.py && npm run build
 ```
 
 Подробнее на странице [Валидация и версии](validation.md).

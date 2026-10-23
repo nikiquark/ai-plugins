@@ -8,6 +8,7 @@ Marketplace плагинов для Claude Code (`nikiquark-ai-plugins`).
 |---|---|
 | `dev-core` | Общие компоненты пайплайнов: интервью `grill-me`, ограниченный цикл ревью `review-loop`, протокол `reuse-first`, команда `git-snapshot`, контроль контекста, MCP Context7 |
 | `web-pipeline` | Веб-проекты от идеи до продакшена: спецификация, смысл и тексты с SEO, архитектура, дизайн-концепты, бэкенд и фронтенд, проверки качества, ревью, деплой через Ansible, обслуживание безопасности. Зависит от `dev-core` |
+| `idea-pipeline` | Проверка идеи до разработки: рынок с источниками, конкуренты, клиенты, УТП, конкурентное преимущество, go-to-market, красная команда, уровни готовности KTH, эксперименты с заранее заданными порогами. Зависит от `dev-core` |
 
 ## Установка
 
@@ -16,6 +17,7 @@ Marketplace плагинов для Claude Code (`nikiquark-ai-plugins`).
 ```bash
 claude plugin marketplace add nikiquark/ai-plugins
 claude plugin install web-pipeline@nikiquark-ai-plugins    # dev-core ставится как зависимость
+claude plugin install idea-pipeline@nikiquark-ai-plugins
 ```
 
 Из локального клона:
@@ -40,11 +42,20 @@ claude plugin install web-pipeline@nikiquark-ai-plugins
 | `/web-pipeline:secure-maintain [report\|fix] [env]` | Сканирование уязвимостей и исправления |
 | `/web-pipeline:init` | Подключение проекта к пайплайну |
 
+## Команды idea-pipeline
+
+| Команда | Что делает |
+|---|---|
+| `/idea-pipeline:new-idea <идея>` | Исследование идеи от интервью до memo с рекомендацией и планом экспериментов |
+| `/idea-pipeline:evidence [заметки]` | Запись интервью или результата эксперимента, пересчёт готовности, гейт стадии |
+| `/idea-pipeline:readiness` | Дерево готовности, слабое звено, ближайшие milestones |
+| `/idea-pipeline:interview-kit [сегмент]` | Скрипт интервью по The Mom Test |
+
 ## Разработка
 
 ```bash
 claude plugin validate .                                                  # marketplace и все плагины
-claude --plugin-dir plugins/dev-core --plugin-dir plugins/web-pipeline    # запуск без установки
+claude --plugin-dir plugins/dev-core --plugin-dir plugins/web-pipeline --plugin-dir plugins/idea-pipeline    # запуск без установки
 ```
 
 Документация собирается из `src/content/docs/` с помощью Astro Starlight:

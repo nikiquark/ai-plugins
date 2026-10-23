@@ -13,7 +13,7 @@ Requested change: $ARGUMENTS
 
 ## Resume first
 
-If `.claude/state/pipeline.json` exists with `"flow": "change"`, tell the user where the last run stopped and continue from there.
+If `.claude/state/pipeline.json` exists with `"flow": "change"`, tell the user where the last run stopped and continue from there. If it exists with another `flow`, another pipeline is in progress in this project: tell the user and stop until they finish that run or delete the file.
 
 ## Phase 0: Audit (facts before questions)
 

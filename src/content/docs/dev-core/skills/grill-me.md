@@ -8,7 +8,7 @@ title: "grill-me"
 |---|---|
 | Вызов | `/dev-core:grill-me <тема>` |
 | Автовызов | Да, когда вы просите «погонять» вас по плану или решению, или используете слово «grill» |
-| Кто использует | Фаза 1 в [`new-project`](../../web-pipeline/commands/new-project.md) и [`change`](../../web-pipeline/commands/change.md) |
+| Кто использует | Фаза 1 в [`new-project`](../../web-pipeline/commands/new-project.md), [`change`](../../web-pipeline/commands/change.md) и [`new-idea`](../../idea-pipeline/commands/new-idea.md) |
 | Исходник | `plugins/dev-core/skills/grill-me/SKILL.md` |
 
 ## Когда срабатывает
@@ -51,6 +51,7 @@ title: "grill-me"
 |---|---|---|
 | `new-project` | `docs/spec.md` | [`templates/spec.md`](../../web-pipeline/templates.md#specmd) |
 | `change` | `docs/changes/NNNN-<slug>.md` | [`templates/change.md`](../../web-pipeline/templates.md#changemd) |
+| `new-idea` | `docs/idea/brief.md`, `.claude/idea-pipeline.json`, `docs/idea/readiness.md` | [Файлы idea-pipeline](../../idea-pipeline/project-files.md) |
 
 ## С чем взаимодействует
 

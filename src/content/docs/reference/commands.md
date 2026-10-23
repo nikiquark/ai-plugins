@@ -14,6 +14,15 @@ title: "Все команды"
 
 \* только для новых экранов или редизайна.
 
+## Команды idea-pipeline
+
+| Команда | Аргументы | Автовызов | Точки решения | Страница |
+|---|---|---|---|---|
+| `/idea-pipeline:new-idea` | `[идея]` | нет | интервью, GATE 0, GATE 1, GATE 2 | [new-idea](../idea-pipeline/commands/new-idea.md) |
+| `/idea-pipeline:evidence` | `[заметки или результаты]` | да | гейт стадии | [evidence](../idea-pipeline/commands/evidence.md) |
+| `/idea-pipeline:readiness` | — | да | — | [readiness](../idea-pipeline/commands/readiness.md) |
+| `/idea-pipeline:interview-kit` | `[сегмент]` | да | — | [interview-kit](../idea-pipeline/commands/interview-kit.md) |
+
 ## Скиллы dev-core
 
 | Скилл | Аргументы | Автовызов | Страница |
@@ -34,6 +43,13 @@ title: "Все команды"
 | `/web-pipeline:testing-standards` | [testing-standards](../web-pipeline/skills/testing-standards.md) |
 | `/web-pipeline:ansible-conventions` | [ansible-conventions](../web-pipeline/skills/ansible-conventions.md) |
 
+## Навыки-знания idea-pipeline
+
+| Скилл | Страница |
+|---|---|
+| `/idea-pipeline:research-standards` | [research-standards](../idea-pipeline/skills/research-standards.md) |
+| `/idea-pipeline:readiness-levels` | [readiness-levels](../idea-pipeline/skills/readiness-levels.md) |
+
 ## Команды оболочки
 
 | Команда | Плагин | Страница |
@@ -41,6 +57,7 @@ title: "Все команды"
 | `git-snapshot` / `git snapshot` | dev-core | [git-snapshot](../dev-core/git-snapshot.md) |
 | `python3 scripts/anti_slop.py` | web-pipeline (копия в проекте) | [anti_slop.py](../web-pipeline/anti-slop.md) |
 | `python3 scripts/seo_check.py`, `make seo` | web-pipeline (копия в проекте) | [seo_check.py](../web-pipeline/seo-check.md) |
+| `idea-claims` | idea-pipeline | [idea-claims](../idea-pipeline/idea-claims.md) |
 
 ## Управление плагинами
 
