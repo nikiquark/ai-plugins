@@ -1,4 +1,4 @@
-# nikiquark-agents
+# ai-plugins
 
 Marketplace плагинов для Claude Code.
 
@@ -10,8 +10,8 @@ Marketplace плагинов для Claude Code.
 ## Установка
 
 ```bash
-claude plugin marketplace add ~/Projects/AI/agents-setup        # или <github-user>/agents-setup
-claude plugin install web-pipeline@nikiquark-agents             # dev-core ставится как зависимость
+claude plugin marketplace add ~/Projects/AI/ai-plugins            # или nikiquark/ai-plugins
+claude plugin install web-pipeline@nikiquark-ai-plugins           # dev-core ставится как зависимость
 ```
 
 В сессии то же самое делают `/plugin marketplace add …` и `/plugin install …`. При установке из локальной папки правки подхватываются через `/reload-plugins`.

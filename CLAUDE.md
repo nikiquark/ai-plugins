@@ -1,6 +1,6 @@
-# agents-setup
+# ai-plugins
 
-A Claude Code plugin marketplace (`nikiquark-agents`). Plugins live in `plugins/<name>/`, and each is listed in `.claude-plugin/marketplace.json`.
+A Claude Code plugin marketplace (`nikiquark-ai-plugins`). Plugins live in `plugins/<name>/`, and each is listed in `.claude-plugin/marketplace.json`.
 
 ## Conventions
 

@@ -1,6 +1,6 @@
 {
-  "name": "nikiquark-agents",
-  "description": "Personal Claude Code pipelines: shared core plus domain pipelines (web, science)",
+  "name": "nikiquark-ai-plugins",
+  "description": "Personal Claude Code pipelines: shared core plus domain pipelines",
   "owner": {
     "name": "nikiquark",
     "email": "nikiquark@gmail.com"
