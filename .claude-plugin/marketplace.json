@@ -1,0 +1,20 @@
+{
+  "name": "nikiquark-agents",
+  "description": "Personal Claude Code pipelines: shared core plus domain pipelines (web, science)",
+  "owner": {
+    "name": "nikiquark",
+    "email": "nikiquark@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "dev-core",
+      "source": "./plugins/dev-core",
+      "description": "Shared building blocks for every pipeline: grill-me interview, bounded review loop, reuse-first protocol, Context7 docs"
+    },
+    {
+      "name": "web-pipeline",
+      "source": "./plugins/web-pipeline",
+      "description": "Web projects from idea to production: spec, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance"
+    }
+  ]
+}

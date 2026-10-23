@@ -1,0 +1,12 @@
+{
+  "name": "dev-core",
+  "displayName": "Dev Core",
+  "version": "0.3.0",
+  "description": "Shared building blocks for every pipeline: grill-me interview, bounded review loop, reuse-first protocol, Context7 docs",
+  "author": {
+    "name": "nikiquark",
+    "email": "nikiquark@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["interview", "review", "reuse", "core"]
+}

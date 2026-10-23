@@ -1,0 +1,14 @@
+{
+  "stack": "TBD",
+  "commands": {
+    "format_file": "",
+    "lint_file": "",
+    "check": "make check"
+  },
+  "lint_extensions": [],
+  "stop_gate": {
+    "enabled": false,
+    "max_blocks": 3,
+    "timeout_seconds": 540
+  }
+}

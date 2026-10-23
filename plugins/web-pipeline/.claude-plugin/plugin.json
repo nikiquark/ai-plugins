@@ -1,0 +1,13 @@
+{
+  "name": "web-pipeline",
+  "displayName": "Web Pipeline",
+  "version": "0.3.0",
+  "description": "Web projects from idea to production: spec, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance",
+  "author": {
+    "name": "nikiquark",
+    "email": "nikiquark@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["web", "frontend", "backend", "ansible", "deploy", "security"],
+  "dependencies": ["dev-core"]
+}

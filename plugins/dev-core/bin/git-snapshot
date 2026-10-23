@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Print a git tree hash of the current working tree (tracked + untracked, honoring .gitignore)
+# without touching the user's index, stash or history. Diff two snapshots with:
+#   git diff <tree-a> <tree-b>
+# Lives in bin/, so it is on the Bash tool PATH while dev-core is enabled (usable as `git snapshot`).
+set -euo pipefail
+
+git_dir=$(git rev-parse --git-dir)
+tmp_index="$git_dir/snapshot-index.$$"
+trap 'rm -f "$tmp_index"' EXIT
+
+if git rev-parse --verify -q HEAD >/dev/null; then
+  GIT_INDEX_FILE="$tmp_index" git read-tree HEAD
+fi
+GIT_INDEX_FILE="$tmp_index" git add -A
+GIT_INDEX_FILE="$tmp_index" git write-tree
