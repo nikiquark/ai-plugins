@@ -4,7 +4,7 @@ These phases run after the plan is approved. The orchestrator (the main conversa
 
 ## Delegation rules
 
-- Subagents do not see the conversation. Every delegation message must stand on its own: give the task id, the paths to `docs/spec.md` (or the change doc), `docs/architecture.md`, `docs/design.md` and `docs/plan.md`, the acceptance criteria, and what to return.
+- Subagents do not see the conversation. Every delegation message must stand on its own: give the task id, the paths to `docs/spec.md` (or the change doc), `docs/content.md`, `docs/architecture.md`, `docs/design.md` and `docs/plan.md`, the acceptance criteria, and what to return.
 - Pass **paths, not pasted content**.
 - Ask each implementer to return: the files it changed, the tests it added, its `reuse:` notes, the check status, and anything it could not do.
 - Run independent delegations in parallel, in one message. Run dependent ones in sequence.
@@ -43,7 +43,9 @@ As soon as the contract and the acceptance criteria exist, delegate to `web-pipe
 
 ## D4. Bounded review
 
-Invoke the `dev-core:review-loop` skill with:
+**SEO gate first** (when `docs/content.md` exists). Start the app in the background (`make dev`) and run `make seo`. It reads the site as bots do: robots.txt, sitemap, the 404 status, and the title, description, canonical, Open Graph and JSON-LD of every page. Send any errors to `web-pipeline:frontend-dev` once. The design critic runs it again in the review, reports the errors that remain as findings, and judges the warnings.
+
+Then invoke the `dev-core:review-loop` skill with:
 - reviewers: `web-pipeline:code-reviewer`, `web-pipeline:security-reviewer`, plus `web-pipeline:design-critic` when the UI changed;
 - fixers: backend files → `web-pipeline:backend-dev`, frontend files → `web-pipeline:frontend-dev`, e2e tests → `web-pipeline:qa-engineer`;
 - base: the `implementation_base` snapshot from `.claude/state/pipeline.json`;
@@ -54,7 +56,8 @@ Invoke the `dev-core:review-loop` skill with:
 
 Stop and give the user:
 - how to run it locally (`make dev` or the equivalent) and the URL;
-- a short checklist of what to look at, taken from the acceptance criteria;
+- a short checklist of what to look at, taken from the acceptance criteria and the key messages in `docs/content.md`;
+- the `make seo` result;
 - what the review loop deferred, and anything in `TODO.md`;
 - the next step: run `/web-pipeline:deploy staging` once they are happy.
 

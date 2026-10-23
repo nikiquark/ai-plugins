@@ -1,6 +1,6 @@
 # web-pipeline
 
-Веб-проекты от идеи до продакшена: спецификация, архитектура, смелые дизайн-концепты, бэкенд и фронтенд, проверки качества, ревью, деплой через Ansible и обслуживание безопасности.
+Веб-проекты от идеи до продакшена: спецификация, смысл и тексты с SEO, архитектура, смелые дизайн-концепты, бэкенд и фронтенд, проверки качества, ревью, деплой через Ansible и обслуживание безопасности.
 
 ```bash
 claude plugin install web-pipeline@nikiquark-ai-plugins   # dev-core ставится как зависимость
@@ -24,9 +24,9 @@ flowchart LR
 
 | Команда | Что делает |
 |---|---|
-| [`/web-pipeline:new-project <идея>`](commands/new-project.md) | grill-me → `spec.md` → архитектура ✋ → три дизайн-концепта ✋ → API-контракт → бэкенд, фронтенд и e2e → `make check` → ревью, не больше двух раундов → локальная проверка ✋ |
-| [`/web-pipeline:change <что изменить>`](commands/change.md) | аудит кода → grill-me по изменению → анализ влияния и план ✋ → дизайн, если меняется UI ✋ → реализация, проверки и ревью → локальная проверка ✋ |
-| [`/web-pipeline:deploy [staging|production]`](commands/deploy.md) | preflight → `ansible-playbook --check --diff` ✋ → применение → smoke-тесты → заголовки, TLS, порты, trivy, ZAP baseline → отчёт, предложение отката |
+| [`/web-pipeline:new-project <идея>`](commands/new-project.md) | grill-me → `spec.md` → `content.md` (смысл, тексты, SEO) → архитектура ✋ → три дизайн-концепта ✋ → API-контракт → бэкенд, фронтенд и e2e → `make check` → `make seo` → ревью, не больше двух раундов → локальная проверка ✋ |
+| [`/web-pipeline:change <что изменить>`](commands/change.md) | аудит кода → grill-me по изменению → `content.md`, если меняются публичные страницы → анализ влияния и план ✋ → дизайн, если меняется UI ✋ → реализация, проверки и ревью → локальная проверка ✋ |
+| [`/web-pipeline:deploy [staging|production]`](commands/deploy.md) | preflight → `ansible-playbook --check --diff` ✋ → применение → smoke-тесты и индексация → заголовки, TLS, порты, trivy, ZAP baseline → отчёт, предложение отката |
 | [`/web-pipeline:secure-maintain [report|fix] [env]`](commands/secure-maintain.md) | osv-scanner, trivy, lynis и обновления на хостах → разбор находок ✋ → ветка с исправлениями → отчёт |
 | [`/web-pipeline:init [--legacy]`](commands/init.md) | Подключает проект к пайплайну. Вызывается из `new-project` и `change` |
 
@@ -38,10 +38,10 @@ flowchart LR
 |---|---|---|
 | `skills/` (команды) | `new-project`, `change`, `deploy`, `secure-maintain`, `init` | [Команды](commands/new-project.md) |
 | `shared/delivery-phases.md` | Общие фазы D1–D5 для `new-project` и `change` | [Фазы реализации](delivery.md) |
-| `agents/` | 9 субагентов | [Субагенты](agents/index.md) |
-| `skills/` (знания) | `frontend-style`, `backend-standards`, `testing-standards`, `ansible-conventions` | [Навыки-знания](skills/frontend-style.md) |
+| `agents/` | 10 субагентов | [Субагенты](agents/index.md) |
+| `skills/` (знания) | `frontend-style`, `seo-standards`, `backend-standards`, `testing-standards`, `ansible-conventions` | [Навыки-знания](skills/frontend-style.md) |
 | `hooks/`, `scripts/` | Форматирование и линтер после правки, `make check` перед остановкой, guard для Bash | [Хуки](hooks.md) |
-| `templates/` | `spec.md`, `change.md`, `web-pipeline.json`, раздел `CLAUDE.md`, `anti_slop.py` | [Шаблоны](templates.md), [anti_slop.py](anti-slop.md) |
+| `templates/` | `spec.md`, `content.md`, `change.md`, `web-pipeline.json`, раздел `CLAUDE.md`, `anti_slop.py`, `seo_check.py` | [Шаблоны](templates.md), [anti_slop.py](anti-slop.md), [seo_check.py](seo-check.md) |
 | `.mcp.json` | Playwright MCP | [MCP Playwright](playwright.md) |
 
 ## Подключение проекта
@@ -54,6 +54,7 @@ flowchart LR
 
 | Агент | Модель | Effort |
 |---|---|---|
+| [content-strategist](agents/content-strategist.md) | Opus | high |
 | [architect](agents/architect.md) | Opus | high |
 | [designer](agents/designer.md) | Opus | high |
 | [backend-dev](agents/backend-dev.md) | Sonnet | medium |

@@ -33,6 +33,7 @@ Run `ansible-playbook -i inventories/<env> playbooks/deploy.yml --check --diff` 
 
 - `playbooks/smoke.yml` if it exists. Otherwise run `curl -fsS` against `/healthz` and `/readyz` and against the key routes from `docs/spec.md`, and check the status codes and response times.
 - If the project has Playwright tests tagged `@smoke`, run them with `BASE_URL=<env url>`.
+- **Indexing**: run `python3 scripts/seo_check.py https://<host>`, or the plugin's copy at `${CLAUDE_PLUGIN_ROOT}/templates/seo_check.py` if the project has none. Staging always uses `--expect noindex`. Production uses `--expect index`, unless `docs/content.md` says the app is private. A production that blocks crawlers, or a staging that can be indexed, is a high finding.
 
 ## 5. Post-deploy security checks (own hosts only)
 

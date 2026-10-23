@@ -24,7 +24,7 @@ flowchart TB
   G --> T[3. git tag deploy-env-дата]
   T --> AP[ansible-playbook без --check<br/>✋ запрос guard-хука]
   AP -- сбой --> RB
-  AP --> SM[4. Smoke-тесты]
+  AP --> SM[4. Smoke-тесты и индексация]
   SM --> SEC[5. Заголовки, TLS, порты, trivy, ZAP baseline]
   SEC --> REP[6. Отчёт docs/deploys/]
   REP -- что-то упало --> RB[rollback.yml --check → ✋ → rollback]
@@ -54,10 +54,14 @@ ansible-playbook -i inventories/<env> playbooks/deploy.yml --check --diff
 - Ставится тег `git tag -a deploy-<env>-<YYYYMMDD-HHMM> -m "deploy <env>"`. Тег не пушится, если вы не попросите.
 - Плейбук запускается без `--check`. При сбое пайплайн останавливается, показывает упавшую задачу и её вывод и предлагает откат. Слепых повторов не бывает.
 
-### 4. Smoke-тесты
+### 4. Smoke-тесты и индексация
 
 - `playbooks/smoke.yml`, если он есть. Иначе `curl -fsS` по `/healthz`, `/readyz` и ключевым маршрутам из `docs/spec.md` с проверкой кодов ответа и времени.
 - Playwright-тесты с тегом `@smoke` с `BASE_URL=<url окружения>`, если они есть.
+- **Индексация:** [`seo_check.py`](../seo-check.md) по адресу окружения. Если в проекте нет копии, используется копия из плагина.
+    - Staging всегда проверяется с `--expect noindex`.
+    - Production проверяется с `--expect index`, если `docs/content.md` не говорит, что приложение закрытое.
+    - Production, который закрыт от роботов, или staging, который может попасть в поиск, — находка уровня high.
 
 ### 5. Проверки безопасности после деплоя
 
@@ -85,4 +89,5 @@ ansible-playbook -i inventories/<env> playbooks/deploy.yml --check --diff
 
 - **Guard-хук спрашивает разрешение.** Это нормально для запуска без `--check`. Разрешайте, только если это тот деплой, о котором вы договорились.
 - **Production отказывается деплоиться.** Этот коммит ещё не был на staging. Выкатите на staging или явно скажите, что делаете исключение.
+- **Staging проваливает проверку индексации.** Включите `proxy_noindex: true` в `inventories/staging/group_vars/all/vars.yml` ([`ansible-conventions`](../skills/ansible-conventions.md)) и выкатите `site.yml`.
 - **Нет `testssl.sh`, `nmap` или `docker`.** Проверка будет пропущена с подсказкой по установке, остальные выполнятся.

@@ -8,8 +8,8 @@
 |---|---|---|
 | Скилл-оркестратор | Скилл с `disable-model-invocation: true`: вызывается только вами | `new-project`, `change`, `deploy`, `secure-maintain` |
 | Процедурный скилл | Скилл, который оркестратор вызывает как шаг | `dev-core:grill-me`, `dev-core:review-loop`, `web-pipeline:init` |
-| Навык-знание | Скилл со стандартами, предзагружается в агентов | `frontend-style`, `backend-standards`, `testing-standards`, `ansible-conventions`, `dev-core:reuse-first` |
-| Субагент | Отдельный контекст со своей моделью, effort и инструментами | `architect`, `backend-dev`, `code-reviewer`… |
+| Навык-знание | Скилл со стандартами, предзагружается в агентов | `frontend-style`, `seo-standards`, `backend-standards`, `testing-standards`, `ansible-conventions`, `dev-core:reuse-first` |
+| Субагент | Отдельный контекст со своей моделью, effort и инструментами | `content-strategist`, `architect`, `backend-dev`, `code-reviewer`… |
 | Хук | Скрипт, который Claude Code запускает на событиях | lint после правки, `make check` перед остановкой, guard для Bash |
 | Исполняемый файл в `bin/` | Попадает в PATH инструмента Bash | `git-snapshot` |
 | MCP-сервер | Внешние инструменты | Context7, Playwright |
@@ -20,7 +20,7 @@
 flowchart TB
   U([Вы]) -- /web-pipeline:команда --> O[Оркестратор<br/>основной диалог]
   O -- grill-me --> U
-  O -- делегирует пути к docs --> A[Субагенты<br/>architect · designer · *-dev · qa]
+  O -- делегирует пути к docs --> A[Субагенты<br/>content-strategist · architect · designer · *-dev · qa]
   A -- краткий отчёт --> O
   O -- review-loop --> R[Ревьюеры<br/>только чтение]
   R -- JSON-вердикт --> O
@@ -36,7 +36,7 @@ flowchart TB
 Оркестратор работает на модели текущей сессии. Он:
 
 - ведёт интервью с вами и показывает результаты в точках решения;
-- раздаёт задачи субагентам. Каждое поручение самодостаточное: субагент не видит диалог, поэтому получает пути к `docs/spec.md`, `docs/architecture.md`, `docs/design.md`, `docs/plan.md`, критерии приёмки и описание ожидаемого отчёта;
+- раздаёт задачи субагентам. Каждое поручение самодостаточное: субагент не видит диалог, поэтому получает пути к `docs/spec.md`, `docs/content.md`, `docs/architecture.md`, `docs/design.md`, `docs/plan.md`, критерии приёмки и описание ожидаемого отчёта;
 - передаёт **пути, а не содержимое** файлов;
 - после каждого шага обновляет `.claude/state/pipeline.json`;
 - сам не пишет код приложения, кроме тривиальной склейки готовых частей.
@@ -45,7 +45,7 @@ flowchart TB
 
 У каждого агента во frontmatter заданы модель и effort под его задачу ([сводная таблица](../web-pipeline/agents/index.md)):
 
-- **Opus** принимает решения и делает ревью: architect, designer, все ревьюеры;
+- **Opus** принимает решения и делает ревью: content-strategist, architect, designer, все ревьюеры;
 - **Sonnet** пишет код: backend-dev, frontend-dev, qa-engineer;
 - **Haiku** разбирает объёмный вывод сканеров: ops-auditor.
 

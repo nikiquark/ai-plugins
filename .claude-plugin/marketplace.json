@@ -14,7 +14,7 @@
     {
       "name": "web-pipeline",
       "source": "./plugins/web-pipeline",
-      "description": "Web projects from idea to production: spec, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance"
+      "description": "Web projects from idea to production: spec, message and SEO, architecture, bold design concepts, backend/frontend, quality gates, review, Ansible deploy and security maintenance"
     }
   ]
 }

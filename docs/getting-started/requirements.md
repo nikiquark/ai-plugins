@@ -8,8 +8,8 @@
 |---|---|
 | `git` | Снимки дерева (`git-snapshot`, stop-gate), ветки, теги деплоя |
 | `jq` | Все хуки читают и пишут JSON через `jq` |
-| `python3` | `scripts/anti_slop.py` (только стандартная библиотека) |
-| `make` | `make check`, `make dev`, `make test` |
+| `python3` | `scripts/anti_slop.py` и `scripts/seo_check.py` (только стандартная библиотека) |
+| `make` | `make check`, `make dev`, `make test`, `make seo` |
 | `bash`, `timeout` (coreutils) | Скрипты хуков |
 
 Без `jq` хуки не работают, поэтому ставьте его в первую очередь.

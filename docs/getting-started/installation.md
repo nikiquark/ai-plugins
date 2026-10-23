@@ -81,4 +81,4 @@ claude plugin uninstall dev-core@nikiquark-ai-plugins
 claude plugin marketplace remove nikiquark-ai-plugins
 ```
 
-Файлы, которые пайплайн создал в проектах (`.claude/web-pipeline.json`, `docs/`, `scripts/anti_slop.py`), остаются на месте: они принадлежат проекту.
+Файлы, которые пайплайн создал в проектах (`.claude/web-pipeline.json`, `docs/`, `scripts/anti_slop.py`, `scripts/seo_check.py`), остаются на месте: они принадлежат проекту.

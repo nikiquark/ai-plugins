@@ -61,3 +61,5 @@ For containerized apps, the equivalent is a `docker compose` stack whose image t
 - `chrony` for time sync, `logrotate`, and a swap file if memory is low.
 - TLS through certbot or Caddy, with auto-renew checked by a timer.
 - The proxy sends security headers: HSTS, CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
+- The proxy role has a `proxy_noindex` variable. When it is true, every response carries `X-Robots-Tag: noindex, nofollow`. Set it to `true` in `inventories/staging/group_vars/all/vars.yml`, and to `false` in production unless the app is private (see `web-pipeline:seo-standards`).
+- The proxy redirects http to https and the non-canonical host to the canonical one with a 301.

@@ -79,3 +79,5 @@ deploy/ansible/
 - `chrony` для времени, `logrotate`, swap-файл при нехватке памяти.
 - TLS через certbot или Caddy, автопродление проверяется таймером.
 - Прокси отдаёт заголовки безопасности: HSTS, CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
+- У роли прокси есть переменная `proxy_noindex`. Когда она `true`, каждый ответ получает `X-Robots-Tag: noindex, nofollow`. В `inventories/staging/group_vars/all/vars.yml` она `true`, в production — `false`, если приложение не закрытое ([`seo-standards`](seo-standards.md)).
+- Прокси редиректит http на https и неканонический хост на канонический через 301.

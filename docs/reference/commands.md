@@ -27,6 +27,7 @@
 | Скилл | Страница |
 |---|---|
 | `/web-pipeline:frontend-style` | [frontend-style](../web-pipeline/skills/frontend-style.md) |
+| `/web-pipeline:seo-standards` | [seo-standards](../web-pipeline/skills/seo-standards.md) |
 | `/web-pipeline:backend-standards` | [backend-standards](../web-pipeline/skills/backend-standards.md) |
 | `/web-pipeline:testing-standards` | [testing-standards](../web-pipeline/skills/testing-standards.md) |
 | `/web-pipeline:ansible-conventions` | [ansible-conventions](../web-pipeline/skills/ansible-conventions.md) |
@@ -37,6 +38,7 @@
 |---|---|---|
 | `git-snapshot` / `git snapshot` | dev-core | [git-snapshot](../dev-core/git-snapshot.md) |
 | `python3 scripts/anti_slop.py` | web-pipeline (копия в проекте) | [anti_slop.py](../web-pipeline/anti-slop.md) |
+| `python3 scripts/seo_check.py`, `make seo` | web-pipeline (копия в проекте) | [seo_check.py](../web-pipeline/seo-check.md) |
 
 ## Управление плагинами
 

@@ -25,7 +25,7 @@ claude plugin install web-pipeline@nikiquark-ai-plugins
 
 ## 3. Проверьте агентов
 
-Выполните `/agents`. В списке должны быть 9 агентов плагина: `web-pipeline:architect`, `web-pipeline:designer`, `web-pipeline:backend-dev`, `web-pipeline:frontend-dev`, `web-pipeline:qa-engineer`, `web-pipeline:code-reviewer`, `web-pipeline:security-reviewer`, `web-pipeline:design-critic`, `web-pipeline:ops-auditor`.
+Выполните `/agents`. В списке должны быть 10 агентов плагина: `web-pipeline:content-strategist`, `web-pipeline:architect`, `web-pipeline:designer`, `web-pipeline:backend-dev`, `web-pipeline:frontend-dev`, `web-pipeline:qa-engineer`, `web-pipeline:code-reviewer`, `web-pipeline:security-reviewer`, `web-pipeline:design-critic`, `web-pipeline:ops-auditor`.
 
 ## 4. Проверьте MCP
 

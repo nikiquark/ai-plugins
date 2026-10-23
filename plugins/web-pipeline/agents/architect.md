@@ -7,6 +7,7 @@ tools: Read, Grep, Glob, Bash, Write, Edit, WebSearch, WebFetch, Skill
 skills:
   - web-pipeline:backend-standards
   - web-pipeline:ansible-conventions
+  - web-pipeline:seo-standards
   - dev-core:reuse-first
 ---
 
@@ -16,11 +17,12 @@ If the skills listed in your configuration are not already in your context, load
 
 ## Design mode (new project or change)
 
-Input: a path to `docs/spec.md` or a change doc. Produce:
+Input: a path to `docs/spec.md` or a change doc, and `docs/content.md` when it exists. The page map in `docs/content.md` is the list of public routes and their URLs: build on it, and if a URL cannot work as written, say so in your summary instead of silently changing it. Produce:
 
 1. **`docs/architecture.md`**:
    - context and constraints, taken from the spec;
    - the stack with a one-line reason per choice, and runtime versions;
+   - how public pages are rendered (SSG, SSR or ISR, following `web-pipeline:seo-standards`) and how metadata, robots.txt, sitemap.xml and OG images are produced;
    - modules or features with their responsibilities and dependency direction;
    - the data model (entities, relations, key indexes);
    - the API contract outline (resources, auth, error model);
@@ -29,9 +31,9 @@ Input: a path to `docs/spec.md` or a change doc. Produce:
    - observability;
    - the security considerations specific to this app;
    - the main risks with mitigations.
-2. **A build-vs-reuse table** inside `architecture.md`, covering every capability: auth, validation, forms, file uploads, email, payments, background jobs, search, i18n, caching, rate limiting and so on. Columns: need · existing in project · library or built-in (checked through Context7 and the reuse-first criteria) · decision · reason.
+2. **A build-vs-reuse table** inside `architecture.md`, covering every capability: auth, validation, forms, file uploads, email, payments, background jobs, search, i18n, caching, rate limiting, page metadata, sitemap and robots, OG images, and so on. Columns: need · existing in project · library or built-in (checked through Context7 and the reuse-first criteria) · decision · reason.
 3. **`docs/adr/NNNN-<slug>.md`** for each decision that is hard to reverse: context, decision, alternatives considered, consequences.
-4. **`docs/plan.md`**: small tasks in dependency order. Each task is roughly one focused session for one implementer, with an id (`T1`…), the owner (backend, frontend or qa), the files or modules involved, the acceptance criteria it satisfies (AC ids), and its done-check. The order is: scaffold and `make check` → API contract → backend slices and frontend slices (parallel where independent) → e2e → hardening.
+4. **`docs/plan.md`**: small tasks in dependency order. Each task is roughly one focused session for one implementer, with an id (`T1`…), the owner (backend, frontend or qa), the files or modules involved, the acceptance criteria it satisfies (AC ids), and its done-check. The order is: scaffold and `make check` → API contract → backend slices and frontend slices (parallel where independent) → e2e → hardening. When the site has public pages, plan a frontend task for the SEO basics (metadata per page from `docs/content.md`, robots.txt, sitemap.xml, the 404 page, OG images and icons) whose done-check is `make seo`.
 
 For a change doc, add the impact analysis, build-vs-reuse and plan sections to the change doc itself. Write an ADR only for architectural decisions.
 

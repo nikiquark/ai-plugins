@@ -1,6 +1,6 @@
 ---
 name: init
-description: Opt a project into the web pipeline - create .claude/web-pipeline.json (enables the plugin's hooks), install the anti-slop checker, wire `make check`, set up .claude/state and the CLAUDE.md section. Use when starting the web pipeline in a project for the first time.
+description: Opt a project into the web pipeline - create .claude/web-pipeline.json (enables the plugin's hooks), install the anti-slop and SEO checkers, wire `make check` and `make seo`, set up .claude/state and the CLAUDE.md section. Use when starting the web pipeline in a project for the first time.
 argument-hint: "[--legacy]"
 ---
 
@@ -18,9 +18,19 @@ The plugin's hooks (lint after edits, `make check` before stopping) do nothing u
    - `lint_extensions`: the file extensions that `lint_file` understands.
    - `stop_gate.enabled`: leave it `false` until `make check` exists and passes. For a new project, delivery phase D1 turns it on. For an existing project, run `make check` once: set it to `true` if the check passes; otherwise leave it `false` and list the failures for the user.
 
-3. **Install the anti-slop checker.** Copy `${CLAUDE_PLUGIN_ROOT}/templates/anti_slop.py` to `scripts/anti_slop.py`. The project owns its copy, so it also runs in CI and without Claude. For an existing codebase (`--legacy`, or when the audit found existing UI), make the `make check` target run it as `python3 scripts/anti_slop.py --since origin/main`. That checks only changed files, so legacy code does not block every change. Explain this to the user.
+3. **Install the checkers.** Copy `${CLAUDE_PLUGIN_ROOT}/templates/anti_slop.py` to `scripts/anti_slop.py`. The project owns its copy, so it also runs in CI and without Claude. For an existing codebase (`--legacy`, or when the audit found existing UI), make the `make check` target run it as `python3 scripts/anti_slop.py --since origin/main`. That checks only changed files, so legacy code does not block every change. Explain this to the user.
 
-4. **Wire `make check`.** If a Makefile exists, add a `check` target or extend the existing one, and show the diff. If there is no Makefile, create one with `check`, `dev`, `test`, `lint` and `fmt` targets. Use placeholders for tools that are not chosen yet, and make each placeholder fail with a clear message (`@echo "configure lint for <stack>" && exit 1`). Do not make placeholders pass silently.
+   Copy `${CLAUDE_PLUGIN_ROOT}/templates/seo_check.py` to `scripts/seo_check.py` the same way. It checks a running site, so it is not part of `make check`.
+
+4. **Wire `make check` and `make seo`.** If a Makefile exists, add a `check` target or extend the existing one, and show the diff. If there is no Makefile, create one with `check`, `dev`, `test`, `lint`, `fmt` and `seo` targets. Use placeholders for tools that are not chosen yet, and make each placeholder fail with a clear message (`@echo "configure lint for <stack>" && exit 1`). Do not make placeholders pass silently. The `seo` target runs the SEO checker against the dev server:
+   ```make
+   BASE_URL ?= http://localhost:3000
+   SITE_URL ?=
+   SEO_EXPECT ?= index
+   seo:
+   	python3 scripts/seo_check.py $(BASE_URL) --expect $(SEO_EXPECT) $(if $(SITE_URL),--site-url $(SITE_URL))
+   ```
+   Set `BASE_URL` to the dev server's URL. `SITE_URL` (the canonical origin) and `SEO_EXPECT` (`noindex` for a private app) come from `docs/content.md` once it exists.
 
 5. **State directory.** Create `.claude/state/` and add `.claude/state/` to `.gitignore`.
 

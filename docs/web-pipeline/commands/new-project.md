@@ -1,12 +1,12 @@
 # new-project
 
-Новый веб-проект от идеи до локальной проверки: интервью, архитектура, дизайн-концепты, реализация с контрактом в начале, проверки качества, ограниченное ревью.
+Новый веб-проект от идеи до локальной проверки: интервью, смысл и тексты с SEO, архитектура, дизайн-концепты, реализация с контрактом в начале, проверки качества, ограниченное ревью.
 
 | | |
 |---|---|
 | Вызов | `/web-pipeline:new-project [идея в нескольких словах]` |
 | Автовызов | Нет (`disable-model-invocation: true`), только вручную |
-| Точки решения | Подтверждение интервью, GATE 1 (архитектура), GATE 2 (дизайн), D5 (локальная проверка) |
+| Точки решения | Подтверждение интервью, GATE 1 (смысл и архитектура), GATE 2 (дизайн), D5 (локальная проверка) |
 | Состояние | `.claude/state/pipeline.json` с `"flow": "new-project"` |
 | Исходник | `plugins/web-pipeline/skills/new-project/SKILL.md` |
 
@@ -20,12 +20,13 @@ flowchart TB
   R -- нет --> P0
   P0[0. Bootstrap: git init, init, pipeline.json] --> P1
   P1[1. grill-me → docs/spec.md] --> P2
-  P2[2. architect → architecture.md, adr/, plan.md] --> G1{{✋ GATE 1}}
+  P2[2. content-strategist → docs/content.md] --> P3
+  P3[3. architect → architecture.md, adr/, plan.md] --> G1{{✋ GATE 1: смысл и архитектура}}
   G1 -- изменения --> P2
-  G1 -- утверждено --> P3[3. designer → 3 концепта в docs/design/concepts/]
-  P3 --> G2{{✋ GATE 2}}
-  G2 -- новый раунд --> P3
-  G2 -- выбран --> DS[designer → docs/design.md]
+  G1 -- утверждено --> P4[4. designer → 3 концепта в docs/design/concepts/]
+  P4 --> G2{{✋ GATE 2}}
+  G2 -- новый раунд --> P4
+  G2 -- выбран --> DS[designer → docs/design.md, OG-шаблон]
   DS --> SNAP[git-snapshot → implementation_base]
   SNAP --> D[D1 → D2 → D3 → D4 → D5 ✋]
 ```
@@ -37,7 +38,7 @@ flowchart TB
 ### Фаза 0. Bootstrap
 
 1. `git init` (ветка `main`), если папка ещё не репозиторий.
-2. Скилл [`init`](init.md): `.claude/web-pipeline.json`, anti-slop, папка состояния, раздел в `CLAUDE.md`. Стек на этом этапе неизвестен, поэтому записывается `TBD`.
+2. Скилл [`init`](init.md): `.claude/web-pipeline.json`, проверки anti-slop и SEO, папка состояния, раздел в `CLAUDE.md`. Стек на этом этапе неизвестен, поэтому записывается `TBD`.
 3. `.claude/state/pipeline.json`: `{ "flow": "new-project", "phase": "requirements" }`.
 
 ### Фаза 1. Требования
@@ -47,27 +48,48 @@ flowchart TB
 Дерево решений обязательно покрывает:
 
 - пользователей и задачу, ради которой они придут;
+- **одну мысль, которую посетитель должен унести, и одно действие, которое он должен совершить**;
+- доказательства, которыми вы можете это подкрепить;
+- конкурентов или то, чем люди пользуются сейчас;
+- должен ли сайт находиться в поиске или это закрытое приложение;
 - user stories с **проверяемыми критериями приёмки**;
 - что не входит в проект;
 - данные и их чувствительность (персональные данные, платежи);
 - интеграции, модель авторизации, ожидаемую нагрузку;
-- языки и локали, SEO;
+- языки и локали;
 - хостинг (ваши серверы через Ansible) и бюджет на платные сервисы;
 - визуальное настроение: ссылки на то, что нравится и не нравится, а не прилагательные.
 
-### Фаза 2. Архитектура → GATE 1
+### Фаза 2. Смысл и тексты
 
-[`architect`](../agents/architect.md) получает путь к `docs/spec.md` и пишет `docs/architecture.md`, `docs/adr/NNNN-*.md` и `docs/plan.md`.
+[`content-strategist`](../agents/content-strategist.md) получает путь к `docs/spec.md` и пишет `docs/content.md` по [шаблону content.md](../templates.md#contentmd):
 
-Вам показывают стек с причинами, таблицу «готовое или своё», главные риски, число задач и отвергнутые варианты. **GATE 1**: явное утверждение или изменения. При изменениях architect перерабатывает документы с учётом ваших замечаний. После утверждения стек записывается в `.claude/web-pipeline.json` и `CLAUDE.md`.
+- главная мысль, главное действие, доказательства и тон;
+- карта страниц с URL и решением, индексировать ли каждую;
+- по каждой странице: ключевое сообщение, секции по приоритету, вырезанное, выделение, готовые тексты;
+- метаданные: title, description, canonical, Open Graph, JSON-LD;
+- политика robots.txt и sitemap. По умолчанию пускаются все роботы, включая AI-ботов.
 
-### Фаза 3. Дизайн-концепты → GATE 2
+Отдельной точки решения здесь нет: смысл утверждается вместе с архитектурой на GATE 1.
 
-[`designer`](../agents/designer.md) получает пути к спецификации и архитектуре и делает 3 намеренно разных концепта в `docs/design/concepts/` (самостоятельные HTML). К каждому прилагается описание: название, одна смелая идея, палитра, пара шрифтов, компромиссы.
+### Фаза 3. Архитектура → GATE 1
 
-**GATE 2**: вы открываете файлы в браузере и выбираете один, смешиваете («шрифты из A, сетка из C») или просите новый раунд. После выбора designer пишет `docs/design.md`: токены, шкалу шрифтов, правила раскладки, движение, перечень компонентов.
+[`architect`](../agents/architect.md) получает пути к `docs/spec.md` и `docs/content.md` и пишет `docs/architecture.md`, `docs/adr/NNNN-*.md` и `docs/plan.md`. Карта страниц из `content.md` для него — список публичных маршрутов. Отдельно он решает, как рендерятся публичные страницы, чтобы метаданные были в HTML от сервера.
 
-### Фаза 4 и дальше. Реализация
+Вам показывают две части:
+
+- **Смысл:** главная мысль, главное действие, карта страниц, варианты заголовка главной с рекомендацией, политика robots, открытые вопросы по контенту.
+- **Архитектура:** стек с причинами, способ отрисовки публичных страниц, таблица «готовое или своё», главные риски, число задач и отвергнутые варианты.
+
+**GATE 1**: явное утверждение или изменения по обеим частям. Если меняется смысл или страницы, content-strategist перерабатывает `content.md`, а при изменении карты страниц architect обновляет план. После утверждения стек записывается в `.claude/web-pipeline.json` и `CLAUDE.md`, а `content.md` помечается утверждённым.
+
+### Фаза 4. Дизайн-концепты → GATE 2
+
+[`designer`](../agents/designer.md) получает пути к спецификации, `content.md` и архитектуре и делает 3 намеренно разных концепта в `docs/design/concepts/` (самостоятельные HTML). В концептах стоят тексты из `content.md` слово в слово, а главное действие — самый заметный элемент экрана. К каждому концепту прилагается описание: название, одна смелая идея, палитра, пара шрифтов, компромиссы.
+
+**GATE 2**: вы открываете файлы в браузере и выбираете один, смешиваете («шрифты из A, сетка из C») или просите новый раунд. После выбора designer пишет `docs/design.md` (токены, шкала шрифтов, правила раскладки, движение, перечень компонентов) и шаблон OG-картинки `docs/design/og-template.html`.
+
+### Фаза 5 и дальше. Реализация
 
 Дерево фиксируется [`git-snapshot`](../../dev-core/git-snapshot.md), хэш сохраняется как `implementation_base`. Затем выполняются фазы [D1–D5](../delivery.md) из `shared/delivery-phases.md`. D5 — финальная точка решения.
 
@@ -77,14 +99,15 @@ flowchart TB
 |---|---|
 | 0 | [`init`](init.md) |
 | 1 | [`dev-core:grill-me`](../../dev-core/skills/grill-me.md) |
-| 2 | [architect](../agents/architect.md) |
-| 3 | [designer](../agents/designer.md) |
+| 2 | [content-strategist](../agents/content-strategist.md) |
+| 3 | [architect](../agents/architect.md) |
+| 4 | [designer](../agents/designer.md) |
 | D1–D3 | [backend-dev](../agents/backend-dev.md), [frontend-dev](../agents/frontend-dev.md), [qa-engineer](../agents/qa-engineer.md) |
-| D4 | [`dev-core:review-loop`](../../dev-core/skills/review-loop.md) с [code-reviewer](../agents/code-reviewer.md), [security-reviewer](../agents/security-reviewer.md), [design-critic](../agents/design-critic.md) |
+| D4 | [`make seo`](../seo-check.md), затем [`dev-core:review-loop`](../../dev-core/skills/review-loop.md) с [code-reviewer](../agents/code-reviewer.md), [security-reviewer](../agents/security-reviewer.md), [design-critic](../agents/design-critic.md) |
 
 ## Какие файлы создаёт
 
-`docs/spec.md`, `docs/architecture.md`, `docs/adr/`, `docs/plan.md`, `docs/design/concepts/*.html`, `docs/design.md`, `TODO.md`, код приложения, `Makefile`, тесты, а также всё, что создаёт [`init`](init.md). Полный список на странице [Файлы в проекте](../project-files.md).
+`docs/spec.md`, `docs/content.md`, `docs/architecture.md`, `docs/adr/`, `docs/plan.md`, `docs/design/concepts/*.html`, `docs/design.md`, `docs/design/og-template.html`, `TODO.md`, код приложения, `Makefile`, тесты, а также всё, что создаёт [`init`](init.md). Полный список на странице [Файлы в проекте](../project-files.md).
 
 ## Язык
 
@@ -93,5 +116,6 @@ flowchart TB
 ## Типичные проблемы
 
 - **Хочу начать заново, а он продолжает старый запуск.** Удалите `.claude/state/pipeline.json`.
+- **Не нравится главная мысль или заголовки.** Скажите об этом на GATE 1, до дизайна: переписать текст дешевле, чем перерисовать концепты.
 - **Концепты получились похожими.** Попросите новый раунд на GATE 2 и прямо назовите, что не понравилось. Designer обязан делать концепты намеренно разными.
 - **`make check` красный из-за отсутствующего инструмента.** Установите его по подсказке из вывода ([Зависимости](../../getting-started/requirements.md)).

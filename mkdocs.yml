@@ -101,6 +101,7 @@ nav:
       - Фазы реализации D1–D5: web-pipeline/delivery.md
       - Субагенты:
           - web-pipeline/agents/index.md
+          - content-strategist: web-pipeline/agents/content-strategist.md
           - architect: web-pipeline/agents/architect.md
           - designer: web-pipeline/agents/designer.md
           - backend-dev: web-pipeline/agents/backend-dev.md
@@ -112,12 +113,14 @@ nav:
           - ops-auditor: web-pipeline/agents/ops-auditor.md
       - Навыки-знания:
           - frontend-style: web-pipeline/skills/frontend-style.md
+          - seo-standards: web-pipeline/skills/seo-standards.md
           - backend-standards: web-pipeline/skills/backend-standards.md
           - testing-standards: web-pipeline/skills/testing-standards.md
           - ansible-conventions: web-pipeline/skills/ansible-conventions.md
       - Хуки: web-pipeline/hooks.md
       - Конфигурация web-pipeline.json: web-pipeline/configuration.md
       - anti_slop.py: web-pipeline/anti-slop.md
+      - seo_check.py: web-pipeline/seo-check.md
       - Шаблоны: web-pipeline/templates.md
       - MCP Playwright: web-pipeline/playwright.md
       - Файлы в проекте: web-pipeline/project-files.md

@@ -1,6 +1,6 @@
 ---
 name: frontend-style
-description: Visual direction and frontend rules for this user's web projects - bold, non-generic design with hard bans (cards, badges, background orbs, emoji, lucide-style icon sets, overused fonts) and a concept-first process. Load for any UI design, frontend implementation or design review.
+description: Visual direction and frontend rules for this user's web projects - bold, non-generic design with hard bans (cards, badges, background orbs, emoji, lucide-style icon sets, overused fonts), restraint rules against cluttered interfaces, and a concept-first process. Load for any UI design, frontend implementation or design review.
 ---
 
 # Frontend style
@@ -38,9 +38,22 @@ Gradients and atmospheric backgrounds are allowed when they create **depth and a
 
 The full catalog of AI-look tells to avoid is in [references/anti-patterns.md](references/anti-patterns.md).
 
+## Restraint
+
+Bold does not mean busy. The boldness goes into one idea, carried by few elements.
+
+- **One primary action per screen**, and it is the most visible control. At most one secondary action next to it. Everything else is a plain link.
+- **Every element serves the page's key message or its primary action** (both are in `docs/content.md`). If an element serves neither, remove it.
+- **One emphasis per screen**: the element `docs/content.md` marks. When everything is big, colored or moving, nothing stands out.
+- **Show what most visitors need now, and reveal the rest progressively**: in details, steps or a next screen. Every extra option at once slows the decision down.
+- **Navigation**: about 5–7 top-level items at most. Group or cut the rest.
+- **Group by proximity and alignment**, not by boxes. Whitespace is the default separator.
+- **Forms**: only the fields you need, one column, labels above the field, and validation after the field is left.
+- **Controls stay familiar.** A bold layout never makes buttons, links or inputs harder to recognize.
+
 ## Process (designer and frontend-dev)
 
-1. **Subject first.** What world does this product live in? Who uses it, where, and in what mood? What does that world look like? Its vernacular materials, printed matter, signage and instruments are the raw material.
+1. **Subject and message first.** What world does this product live in? Who uses it, where, and in what mood? What does that world look like? Its vernacular materials, printed matter, signage and instruments are the raw material. What each page must say, and what it asks the visitor to do, is fixed in `docs/content.md`.
 2. **Direction.** Name it in 2–4 words and state the one bold idea in a sentence.
 3. **Token plan before any code**: 4–6 named colors with hex values and roles; type roles (display, text, mono, small) with family, weights and a scale; spacing scale; radius (often 0); one motion principle; layout rules with ASCII wireframes of the key screens.
 4. **Self-review the plan** against the brief and this file. For every choice, ask: "Is this the first thing any model would pick?" If yes, change it.
@@ -55,7 +68,7 @@ The full catalog of AI-look tells to avoid is in [references/anti-patterns.md](r
 
 ## Copy
 
-Write from the user's side, in plain, active, sentence-case language. Use specific nouns, not "Unlock the power of…". Error messages say what happened and how to fix it. Empty states invite the next action. No exclamation marks unless the brand truly speaks that way.
+Copy comes from `docs/content.md`, written by the content strategist. Use it as written. When you need a line it does not have, write it the same way: from the user's side, in plain, active, sentence-case language, with specific nouns, not "Unlock the power of…". Error messages say what happened and how to fix it. Empty states invite the next action. No exclamation marks unless the brand truly speaks that way.
 
 ## Quality floor (non-negotiable)
 
@@ -64,3 +77,4 @@ Write from the user's side, in plain, active, sentence-case language. Use specif
 - `prefers-reduced-motion` respected; no layout shift from web fonts.
 - Images have dimensions and alt text; above-the-fold media is not lazy-loaded.
 - Lighthouse performance ≥ 90 on mobile for content pages.
+- Public pages meet `web-pipeline:seo-standards`, and `make seo` passes.
