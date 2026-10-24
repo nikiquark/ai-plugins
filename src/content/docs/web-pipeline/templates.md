@@ -72,7 +72,7 @@ Id критериев (`AC-1.2`) сквозные: по ним architect при�
 
 - что проект использует плагин и хуки включены через `.claude/web-pipeline.json`;
 - стек, как запустить локально (`make dev` → URL);
-- что `make check` — обязательная проверка качества и что она включает;
+- что `make check` — обязательная проверка качества и что она включает, а `make audit` (semgrep, аудит зависимостей) запускается перед деплоем;
 - где лежат документы: `docs/spec.md`, `content.md`, `architecture.md`, `adr/`, `design.md`, `plan.md`, `changes/`;
 - что деплой идёт через `deploy/ansible/` и `/web-pipeline:deploy <env>`, а `ansible-playbook` без `--check` вне этой команды не запускается.
 

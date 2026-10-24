@@ -44,21 +44,24 @@ flowchart LR
 
 ## D1. Каркас и проверка качества
 
-Делегируется [`backend-dev`](agents/backend-dev.md), фронтенд-части — [`frontend-dev`](agents/frontend-dev.md). Каркас строится по `docs/architecture.md`, вместе с рабочим `make check`, который запускает:
+Делегируется [`backend-dev`](agents/backend-dev.md), фронтенд-части — [`frontend-dev`](agents/frontend-dev.md). Каркас строится по `docs/architecture.md`, вместе с двумя целями проверки:
 
-| Проверка | Инструмент |
-|---|---|
-| Линтер, формат, типы | По стеку ([backend-standards](skills/backend-standards.md#контроль-в-make-check)) |
-| Unit-тесты | По стеку |
-| Дублирование | `jscpd` |
-| Мёртвый код | `knip` / `vulture` |
-| SAST | `semgrep --config auto` |
-| Секреты | `gitleaks detect` |
-| Аудит зависимостей | `npm audit` / `pip-audit` / `osv-scanner` |
-| Шаблонный «ИИ-вид» | `python3 scripts/anti_slop.py` |
-| Ansible | `ansible-lint` (если есть `deploy/ansible`) |
+- `make check` — быстрая проверка, которую запускает [Stop-хук](hooks.md#stop-gate);
+- `make audit` — медленные сканеры, которым нужна сеть. Те же сканеры на diff запускает [security-reviewer](agents/security-reviewer.md), а [`deploy`](commands/deploy.md) и [`secure-maintain`](commands/secure-maintain.md) запускают `make audit` целиком.
 
-Отсутствующий инструмент должен валить проверку с подсказкой по установке, а не пропускаться молча. Когда `make check` проходит на каркасе, в `.claude/web-pipeline.json` ставится `stop_gate.enabled: true` и заполняются `format_file`, `lint_file` и `lint_extensions` для выбранного стека. С этого момента [Stop-хук](hooks.md#stop-gate) не даёт завершить работу при красной проверке.
+| Проверка | Инструмент | Цель |
+|---|---|---|
+| Линтер, формат, типы | По стеку ([backend-standards](skills/backend-standards.md#контроль-в-make-check)) | `check` |
+| Unit-тесты | По стеку | `check` |
+| Дублирование | `jscpd` | `check` |
+| Мёртвый код | `knip` / `vulture` | `check` |
+| Секреты | `gitleaks detect` | `check` |
+| Шаблонный «ИИ-вид» | `python3 scripts/anti_slop.py` | `check` |
+| Ansible | `ansible-lint` (если есть `deploy/ansible`) | `check` |
+| SAST | `semgrep --config auto` | `audit` |
+| Аудит зависимостей | `npm audit` / `pip-audit` / `osv-scanner` | `audit` |
+
+Отсутствующий инструмент должен валить свою цель с подсказкой по установке, а не пропускаться молча. Оркестратор проверяет каркас командой `make check audit > .claude/state/check.log 2>&1; echo $?`: в контекст попадает только код возврата, а при падении — хвост лога. Когда обе цели проходят, в `.claude/web-pipeline.json` ставится `stop_gate.enabled: true` и заполняются `format_file`, `lint_file` и `lint_extensions` для выбранного стека. С этого момента [Stop-хук](hooks.md#stop-gate) не даёт завершить работу при красной проверке.
 
 ## D2. Сначала контракт
 
@@ -69,9 +72,8 @@ flowchart LR
 Для каждой задачи из `docs/plan.md` в порядке зависимостей:
 
 1. Задача делегируется `backend-dev` или `frontend-dev`. Независимые бэкенд- и фронтенд-задачи идут параллельно.
-2. После отчёта оркестратор сам запускает `make check`.
-    - Падает — вывод один раз возвращается тому же исполнителю.
-    - Падает снова — **одна эскалация**: задача передаётся заново с `model: "opus"` и кратким описанием обеих неудачных попыток.
+2. После отчёта оркестратор **не запускает** `make check` повторно: его уже запустил SubagentStop-хук и дал исполнителю до `stop_gate.max_blocks` попыток исправить ошибки.
+    - Исполнитель сообщает, что проверка всё ещё падает, — **одна эскалация**: задача передаётся заново с `model: "opus"` и кратким описанием неудачи.
     - Падает и после эскалации — пайплайн останавливается и сообщает вам.
 3. Задача отмечается выполненной в `docs/plan.md`.
 
@@ -79,16 +81,17 @@ flowchart LR
 
 ## D4. Ограниченное ревью
 
-**Сначала проверка SEO**, если есть `docs/content.md`. Оркестратор запускает приложение в фоне (`make dev`) и [`make seo`](seo-check.md). Проверка читает сайт так же, как роботы: robots.txt, sitemap, статус 404, а на каждой странице title, description, canonical, Open Graph и JSON-LD. Ошибки один раз уходят [`frontend-dev`](agents/frontend-dev.md). В ревью [design-critic](agents/design-critic.md) запускает проверку снова, оставшиеся ошибки записывает в находки и оценивает предупреждения.
+**SEO**, если есть `docs/content.md`. Оркестратор сам [`make seo`](seo-check.md) не запускает. Это проверка готовности SEO-задачи фронтенда в D3, а в ревью её запускает [design-critic](agents/design-critic.md): ошибки становятся находками, предупреждения он оценивает. Только если design-critic в ревью не участвует (UI не менялся), а маршруты, метаданные, robots.txt или sitemap менялись, оркестратор до ревью поручает [`frontend-dev`](agents/frontend-dev.md) запустить приложение, выполнить `make seo` и исправить ошибки.
 
 Затем вызывается [`dev-core:review-loop`](../dev-core/skills/review-loop.md):
 
 | Параметр | Значение |
 |---|---|
 | Ревьюеры | [code-reviewer](agents/code-reviewer.md), [security-reviewer](agents/security-reviewer.md), плюс [design-critic](agents/design-critic.md), если менялся UI |
+| Финальный ревьюер | security-reviewer: пропускает второй раунд и один раз проверяет все исправления в конце |
 | Исправляющие | бэкенд → `backend-dev`, фронтенд → `frontend-dev`, e2e → `qa-engineer` |
 | База | `implementation_base` из `pipeline.json` |
-| Проверка | `make check` |
+| Проверка | `make check`, тихо: вывод в `.claude/state/check.log` |
 | Раунды | 2 |
 
 ## D5. Локальная проверка (GATE)
@@ -97,8 +100,10 @@ flowchart LR
 
 - как запустить локально (`make dev` или аналог) и URL;
 - короткий чек-лист по критериям приёмки и ключевым сообщениям из `docs/content.md`;
-- результат `make seo`;
+- результат `make seo` из последнего запуска design-critic;
 - что отложило ревью и что есть в `TODO.md`;
 - следующий шаг: `/web-pipeline:deploy staging`, когда вас всё устроит.
 
 Сам пайплайн ничего не деплоит, не пушит и не ставит теги.
+
+Когда вы принимаете результат, оркестратор удаляет `.claude/state/pipeline.json` и `.claude/state/review-loop.json`: запуск окончен, а его результаты остались в `docs/`. Поэтому следующий [`change`](commands/change.md) начинается с чистого листа. Если вы просите доработки, пайплайн остаётся в D5.

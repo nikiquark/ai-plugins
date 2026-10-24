@@ -4,7 +4,8 @@ This project uses the `web-pipeline` plugin. Hooks are enabled by `.claude/web-p
 
 - **Stack**: <fill in>
 - **Run locally**: `make dev` → <url>
-- **Quality gate**: `make check` (lint, types, tests, duplication, dead code, semgrep, gitleaks, dependency audit, anti-slop, ansible-lint). It must pass before any task counts as done.
+- **Quality gate**: `make check` (lint, types, tests, duplication, dead code, gitleaks, anti-slop, ansible-lint). It must pass before any task counts as done.
+- **Audit**: `make audit` (semgrep, dependency audit). Slow and needs the network, so it runs before deploys, not on every stop.
 - **Docs**: `docs/spec.md` (what and why) · `docs/content.md` (message, copy, SEO metadata) · `docs/architecture.md` (how) · `docs/adr/` (decisions) · `docs/design.md` (visual system) · `docs/plan.md` (tasks) · `docs/changes/` (change requests)
 - **Deploy**: `deploy/ansible/` via `/web-pipeline:deploy <env>`. Never run `ansible-playbook` without `--check` outside that skill.
 

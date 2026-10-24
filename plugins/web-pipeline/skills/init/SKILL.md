@@ -1,6 +1,6 @@
 ---
 name: init
-description: Opt a project into the web pipeline - create .claude/web-pipeline.json (enables the plugin's hooks), install the anti-slop and SEO checkers, wire `make check` and `make seo`, set up .claude/state and the CLAUDE.md section. Use when starting the web pipeline in a project for the first time.
+description: Opt a project into the web pipeline - create .claude/web-pipeline.json (enables the plugin's hooks), install the anti-slop and SEO checkers, wire `make check`, `make audit` and `make seo`, set up .claude/state and the CLAUDE.md section. Use when starting the web pipeline in a project for the first time.
 argument-hint: "[--legacy]"
 ---
 
@@ -22,7 +22,7 @@ The plugin's hooks (lint after edits, `make check` before stopping) do nothing u
 
    Copy `${CLAUDE_PLUGIN_ROOT}/templates/seo_check.py` to `scripts/seo_check.py` the same way. It checks a running site, so it is not part of `make check`.
 
-4. **Wire `make check` and `make seo`.** If a Makefile exists, add a `check` target or extend the existing one, and show the diff. If there is no Makefile, create one with `check`, `dev`, `test`, `lint`, `fmt` and `seo` targets. Use placeholders for tools that are not chosen yet, and make each placeholder fail with a clear message (`@echo "configure lint for <stack>" && exit 1`). Do not make placeholders pass silently. The `seo` target runs the SEO checker against the dev server:
+4. **Wire `make check`, `make audit` and `make seo`.** `check` holds the fast checks that the Stop hook runs; `audit` holds the slow, network-bound scans (`semgrep --config auto`, the dependency audit). Delivery phase D1 lists what goes into each. If a Makefile exists, add the `check` and `audit` targets or extend the existing ones, and show the diff. If there is no Makefile, create one with `check`, `audit`, `dev`, `test`, `lint`, `fmt` and `seo` targets. Use placeholders for tools that are not chosen yet, and make each placeholder fail with a clear message (`@echo "configure lint for <stack>" && exit 1`). Do not make placeholders pass silently. The `seo` target runs the SEO checker against the dev server:
    ```make
    BASE_URL ?= http://localhost:3000
    SITE_URL ?=
@@ -36,4 +36,4 @@ The plugin's hooks (lint after edits, `make check` before stopping) do nothing u
 
 6. **CLAUDE.md section.** Append `${CLAUDE_PLUGIN_ROOT}/templates/claude-md-section.md` to the project's `CLAUDE.md`, creating the file if needed, and fill in the stack and the commands. If the section already exists, update it in place.
 
-7. **Report**: what was created or changed, which tools `make check` expects that are not installed (with install commands), and that the hooks are now active for this project.
+7. **Report**: what was created or changed, which tools `make check` and `make audit` expect that are not installed (with install commands), and that the hooks are now active for this project.

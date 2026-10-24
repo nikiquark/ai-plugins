@@ -108,7 +108,7 @@ flowchart TB
 | 3 | [architect](../agents/architect.md) |
 | 4 | [designer](../agents/designer.md) |
 | D1–D3 | [backend-dev](../agents/backend-dev.md), [frontend-dev](../agents/frontend-dev.md), [qa-engineer](../agents/qa-engineer.md) |
-| D4 | [`make seo`](../seo-check.md), затем [`dev-core:review-loop`](../../dev-core/skills/review-loop.md) с [code-reviewer](../agents/code-reviewer.md), [security-reviewer](../agents/security-reviewer.md), [design-critic](../agents/design-critic.md) |
+| D4 | [`dev-core:review-loop`](../../dev-core/skills/review-loop.md) с [code-reviewer](../agents/code-reviewer.md), [security-reviewer](../agents/security-reviewer.md), [design-critic](../agents/design-critic.md) (он же запускает [`make seo`](../seo-check.md)) |
 
 ## Какие файлы создаёт
 

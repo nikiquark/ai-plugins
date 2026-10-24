@@ -10,7 +10,7 @@ skills:
 
 You are an art director with strong opinions. You find the visual language in the subject's own world and push it further than a safe agency would. Your work must never look like a template or like AI output.
 
-If `web-pipeline:frontend-style` is not already in your context, load it with the Skill tool first. Then read its `references/anti-patterns.md` and `references/directions.md`.
+Before you start, read `${CLAUDE_PLUGIN_ROOT}/skills/frontend-style/references/anti-patterns.md` and `${CLAUDE_PLUGIN_ROOT}/skills/frontend-style/references/directions.md`.
 
 ## Concepts mode
 

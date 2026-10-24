@@ -33,7 +33,7 @@ Judge "exploitable here" honestly. A vulnerable code path the app never calls, o
 - **Dependencies**: make the smallest bump that fixes the issue, preferring patch, then minor. A major upgrade becomes a separate item that you discuss with the user first. Update the lock files and read the changelog for breaking changes.
 - **Host issues**: change the Ansible **roles** (the `base` role for hardening and updates). Never fix a server by hand.
 - **No fix available**: propose a mitigation (config, WAF rule, disabling a feature) or a replacement library, and record the accepted risk.
-- Run `make check`. Then delegate to `web-pipeline:security-reviewer` for one review of the diff. This is a single pass, not a loop.
+- Run `make check audit`. Then delegate to `web-pipeline:security-reviewer` for one review of the diff. This is a single pass, not a loop.
 - Do not apply anything to servers yourself. Deploys are user-triggered: the user runs `/web-pipeline:deploy staging`, which does `--check --diff` first.
 
 ## 4. Hand-off

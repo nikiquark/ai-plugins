@@ -58,7 +58,7 @@ Bold does not mean busy. The boldness goes into one idea, carried by few element
 3. **Token plan before any code**: 4–6 named colors with hex values and roles; type roles (display, text, mono, small) with family, weights and a scale; spacing scale; radius (often 0); one motion principle; layout rules with ASCII wireframes of the key screens.
 4. **Self-review the plan** against the brief and this file. For every choice, ask: "Is this the first thing any model would pick?" If yes, change it.
 5. **Build.** Use CSS custom properties for every token. Load fonts properly: `font-display: swap`, preload the display face, subset when you can.
-6. **Critique.** Screenshot at 375, 768 and 1440 px and compare against the plan. **Remove one element** before you call it done.
+6. **Critique.** Screenshot at 375 and 1440 px (and 768 px when the design has a breakpoint between them) and compare against the plan. **Remove one element** before you call it done.
 
 ## Fonts
 

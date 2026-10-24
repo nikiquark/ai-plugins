@@ -9,7 +9,7 @@ title: "seo_check.py"
 | В плагине | `plugins/web-pipeline/templates/seo_check.py` |
 | В проекте | `scripts/seo_check.py` (копию ставит [`init`](commands/init.md)) |
 | Зависимости | Только стандартная библиотека Python 3 |
-| Запускается | `make seo`; frontend-dev на задачах с публичными страницами; оркестратор и [design-critic](agents/design-critic.md) в [D4](delivery.md#d4-ограниченное-ревью); [`deploy`](commands/deploy.md) в smoke-тестах |
+| Запускается | `make seo`; frontend-dev на задачах с публичными страницами; [design-critic](agents/design-critic.md) в [D4](delivery.md#d4-ограниченное-ревью); [`deploy`](commands/deploy.md) в smoke-тестах |
 | Стандарт | [`seo-standards`](skills/seo-standards.md) |
 
 Скрипту нужен запущенный сайт, поэтому в `make check` он не входит. Копия принадлежит проекту: её можно настраивать, и она работает в CI без Claude.

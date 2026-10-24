@@ -14,7 +14,7 @@ Follow the `web-pipeline:ansible-conventions` skill. Act **only** on hosts in `d
 ## 1. Preflight (stop at the first failure)
 
 - The working tree is clean, and the branch is the one the user wants to ship (normally `main`).
-- `make check` passes.
+- `make check audit` passes.
 - `ansible-playbook --syntax-check` passes and `ansible-lint` is clean.
 - The vault is reachable without printing secrets: `ansible-inventory -i inventories/<env> --list >/dev/null`.
 - For production, confirm the commit SHA that is on staging now (from the last deploy report).

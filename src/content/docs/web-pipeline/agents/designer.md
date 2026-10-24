@@ -9,7 +9,7 @@ title: "designer"
 | Имя | `web-pipeline:designer` |
 | Модель / effort | opus / high |
 | Инструменты | `Read, Grep, Glob, Bash, Write, Edit, WebSearch, WebFetch, Skill` |
-| Навыки | [`frontend-style`](../skills/frontend-style.md), а также его `references/anti-patterns.md` и `references/directions.md` |
+| Навыки | [`frontend-style`](../skills/frontend-style.md), а также `anti-patterns.md` и `directions.md` из его `references/`, которые агент читает по полному пути через `${CLAUDE_PLUGIN_ROOT}` |
 | Кто вызывает | [`new-project`](../commands/new-project.md) (фаза 4), [`change`](../commands/change.md) (фаза 4) |
 | Исходник | `plugins/web-pipeline/agents/designer.md` |
 

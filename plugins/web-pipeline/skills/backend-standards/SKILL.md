@@ -71,7 +71,7 @@ Dependencies point inward: api → service → domain. The repo is injected into
 - `GET /healthz` (liveness) and `GET /readyz` (dependencies reachable). The deploy smoke tests use both.
 - Clear error tracking hook-up points; Sentry or similar only if the spec allows it.
 
-## Enforcement (wire into `make check`)
+## Enforcement (wire into `make check`; SAST and dependencies into `make audit`)
 
 | Concern | TypeScript / Node | Python |
 |---|---|---|

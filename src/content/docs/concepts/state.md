@@ -61,7 +61,9 @@ sequenceDiagram
 
 ## Сброс
 
-Чтобы начать поток заново, удалите `.claude/state/pipeline.json` (и при необходимости `review-loop.json`). Документы в `docs/` при этом останутся, и новый запуск их учтёт.
+Обычно сбрасывать ничего не нужно. [`new-project`](../web-pipeline/commands/new-project.md) и [`change`](../web-pipeline/commands/change.md) удаляют `pipeline.json` и `review-loop.json`, когда вы принимаете результат на [D5](../web-pipeline/delivery.md#d5-локальная-проверка-gate), а `new-idea` удаляет их в конце запуска. `review-loop.json` с чужой базой review-loop сам перезаписывает.
+
+Чтобы начать прерванный поток заново, удалите `.claude/state/pipeline.json` (и при необходимости `review-loop.json`). Документы в `docs/` при этом останутся, и новый запуск их учтёт.
 
 ## Состояние идеи
 

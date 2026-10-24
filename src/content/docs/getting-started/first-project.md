@@ -105,10 +105,10 @@ flowchart LR
 
 Дальше работа идёт без вашего участия до финальной проверки. Подробности на странице [Фазы реализации](../web-pipeline/delivery.md).
 
-1. **D1:** `backend-dev` и `frontend-dev` собирают каркас и рабочий `make check`. Пайплайн включает `stop_gate.enabled`, и с этого момента [Stop-хук](../web-pipeline/hooks.md#stop-gate) не даёт завершить работу при красной проверке.
+1. **D1:** `backend-dev` и `frontend-dev` собирают каркас, рабочие `make check` и `make audit`. Пайплайн включает `stop_gate.enabled`, и с этого момента [Stop-хук](../web-pipeline/hooks.md#stop-gate) не даёт завершить работу при красной проверке.
 2. **D2:** API-контракт (OpenAPI или типизированные схемы) и сгенерированные типы клиента.
 3. **D3:** задачи из `docs/plan.md` по порядку. Независимые бэкенд- и фронтенд-задачи идут параллельно. Параллельно `qa-engineer` пишет e2e-тесты Playwright по критериям приёмки.
-4. **D4:** сначала [`make seo`](../web-pipeline/seo-check.md) против запущенного приложения, затем [ограниченное ревью](../dev-core/skills/review-loop.md): `code-reviewer`, `security-reviewer` и `design-critic`, не больше двух раундов.
+4. **D4:** [ограниченное ревью](../dev-core/skills/review-loop.md): `code-reviewer`, `security-reviewer` и `design-critic`, не больше двух раундов. design-critic заодно запускает [`make seo`](../web-pipeline/seo-check.md) против запущенного приложения.
 
 ## Шаг 6. Локальная проверка → ✋
 
@@ -134,7 +134,7 @@ docs/design.md, design/concepts/  визуальная система и кон�
 docs/plan.md                      задачи с отметками
 scripts/anti_slop.py              проверка на «ИИ-вид»
 scripts/seo_check.py              проверка индексации и превью
-Makefile                          make check, make dev, make test, make seo
+Makefile                          make check, make audit, make dev, make test, make seo
 ```
 
 Полный список на странице [Файлы в проекте](../web-pipeline/project-files.md).

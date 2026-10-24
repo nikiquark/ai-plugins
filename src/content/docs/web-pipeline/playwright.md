@@ -16,8 +16,8 @@ title: "MCP Playwright"
 | Агент | Для чего |
 |---|---|
 | [designer](agents/designer.md) | Скриншоты концептов на 375 и 1440 px для самопроверки |
-| [frontend-dev](agents/frontend-dev.md) | Скриншоты на 375, 768 и 1440 px и сравнение с `docs/design.md` до отчёта |
-| [design-critic](agents/design-critic.md) | Скриншоты всех затронутых страниц, hover, focus, проход с клавиатуры |
+| [frontend-dev](agents/frontend-dev.md) | Первый экран на 375 и 1440 px и сравнение с `docs/design.md` до отчёта, только в задачах с новым экраном или новой раскладкой |
+| [design-critic](agents/design-critic.md) | Первый экран затронутых страниц на 375 и 1440 px и вся страница на 1440 px, hover и focus главного действия, проход с клавиатуры по accessibility snapshot |
 
 Все три агента продолжают работу и без Playwright: они сообщают, что инструментов нет, и проверяют только по коду. Качество визуального ревью при этом заметно ниже.
 

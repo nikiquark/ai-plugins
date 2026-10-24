@@ -37,7 +37,7 @@ flowchart TB
 Остановка на первом сбое:
 
 - рабочая копия чистая, ветка та, которую вы хотите выкатить (обычно `main`);
-- `make check` проходит;
+- `make check audit` проходит;
 - `ansible-playbook --syntax-check` проходит, `ansible-lint` чистый;
 - vault доступен без вывода секретов: `ansible-inventory -i inventories/<env> --list >/dev/null`;
 - для production: подтверждается SHA коммита, который сейчас на staging (из последнего отчёта о деплое);

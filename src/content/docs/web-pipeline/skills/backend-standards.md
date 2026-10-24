@@ -82,6 +82,8 @@ src/
 
 ## Контроль в make check
 
+SAST и аудит зависимостей подключаются к `make audit`, остальное — к `make check` (см. [D1](../delivery.md#d1-каркас-и-проверка-качества)).
+
 | Задача | TypeScript / Node | Python |
 |---|---|---|
 | Линтер и формат | `eslint` + `prettier` или `biome` | `ruff check` + `ruff format` |

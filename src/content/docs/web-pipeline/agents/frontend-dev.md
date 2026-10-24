@@ -9,7 +9,8 @@ title: "frontend-dev"
 | Имя | `web-pipeline:frontend-dev` |
 | Модель / effort | sonnet / high |
 | Инструменты | Все инструменты сессии, включая Playwright MCP |
-| Навыки | [`frontend-style`](../skills/frontend-style.md), [`seo-standards`](../skills/seo-standards.md), [`testing-standards`](../skills/testing-standards.md), [`dev-core:reuse-first`](../../dev-core/skills/reuse-first.md) |
+| Навыки | [`frontend-style`](../skills/frontend-style.md), [`testing-standards`](../skills/testing-standards.md), [`dev-core:reuse-first`](../../dev-core/skills/reuse-first.md) |
+| Навыки по требованию | [`seo-standards`](../skills/seo-standards.md): загружается инструментом Skill только в задачах с публичными страницами |
 | Кто вызывает | [Фазы D1, D3](../delivery.md); исправления в [review-loop](../../dev-core/skills/review-loop.md) |
 | Stop-gate | При `SubagentStop` хук запускает `make check` ([подробнее](../hooks.md#stop-gate)) |
 | Исходник | `plugins/web-pipeline/agents/frontend-dev.md` |
@@ -19,11 +20,11 @@ title: "frontend-dev"
 1. Прочитать задачу, её критерии приёмки, `docs/design.md`, `docs/content.md`, API-контракт и сгенерированные типы. Сначала посмотреть существующие компоненты и токены, чтобы переиспользовать их.
 2. **Reuse first:** сначала компоненты и токены проекта, затем нативные HTML и CSS (`<dialog>`, `<details>`, валидация форм, `:has()`, container queries), затем библиотека.
 3. Только токены дизайна. Захардкоженные цвета, размеры шрифтов и отступы, которых нет в `docs/design.md`, — баги.
-4. Тексты из `docs/content.md` слово в слово, включая кнопки, ошибки и пустые состояния. Маркетинговые тексты не придумываются. Если текста нет или он не помещается, берётся ближайший, и это попадает в отчёт. На публичных страницах метаданные из `docs/content.md` рендерятся на сервере по [`seo-standards`](../skills/seo-standards.md).
+4. Тексты из `docs/content.md` слово в слово, включая кнопки, ошибки и пустые состояния. Маркетинговые тексты не придумываются. Если текста нет или он не помещается, берётся ближайший, и это попадает в отчёт. На публичных страницах агент загружает [`seo-standards`](../skills/seo-standards.md) и по нему рендерит на сервере метаданные из `docs/content.md`.
 5. Доступность с самого начала: семантические элементы, подписи, состояния фокуса, работа с клавиатуры, поведение при reduced motion, достаточный контраст.
 6. Тесты: компонентные и unit-тесты на логику и состояния, доступные селекторы, чтобы Playwright-тесты qa-engineer были стабильными.
 7. `make check`, включая `scripts/anti_slop.py`, и исправление всего найденного. Если ошибка anti-slop кажется ложной, строка помечается `anti-slop: allow <причина>`, и это упоминается в отчёте. Если задача касается публичных страниц, ещё запускается приложение и [`make seo`](../seo-check.md), и исправляются его ошибки.
-8. Если доступны инструменты Playwright, снять скриншоты на 375, 768 и 1440 px и сравнить их с `docs/design.md` до отчёта.
+8. Только в задачах, которые добавляют экран или меняют раскладку, и если доступны инструменты Playwright: снять первый экран на 375 и 1440 px и сравнить с `docs/design.md` до отчёта. В задачах только с логикой шаг пропускается: готовый интерфейс проверяет design-critic.
 
 ## Отчёт
 

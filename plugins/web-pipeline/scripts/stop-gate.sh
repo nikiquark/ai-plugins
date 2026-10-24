@@ -11,6 +11,7 @@ set -uo pipefail
 source "$(dirname "$0")/lib.sh"
 read_hook_input
 opted_in || exit 0
+[[ $(config_get '.stop_gate.enabled') == false ]] && exit 0
 cd "$PROJECT" || exit 0
 git rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0
 
@@ -40,8 +41,6 @@ if [[ ${1:-} == --baseline ]]; then
   echo "$tree" >"$STATE/gate-main.seen"
   exit 0
 fi
-
-[[ $(config_get '.stop_gate.enabled') == false ]] && exit 0
 
 event=$(jq -r '.hook_event_name // empty' <<<"$HOOK_INPUT")
 key=main

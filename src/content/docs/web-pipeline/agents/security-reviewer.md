@@ -11,20 +11,18 @@ title: "security-reviewer"
 | Запрещено | `Write, Edit, NotebookEdit, Agent` |
 | `maxTurns` | 40 |
 | Навыки | [`backend-standards`](../skills/backend-standards.md), [`ansible-conventions`](../skills/ansible-conventions.md) |
-| Кто вызывает | [`review-loop`](../../dev-core/skills/review-loop.md) в [D4](../delivery.md#d4-ограниченное-ревью); один проход в [`secure-maintain`](../commands/secure-maintain.md) |
+| Кто вызывает | [`review-loop`](../../dev-core/skills/review-loop.md) в [D4](../delivery.md#d4-ограниченное-ревью): первый раунд и финальный проход по всем исправлениям; один проход в [`secure-maintain`](../commands/secure-maintain.md) |
 | Префикс находок | `SEC-n` |
 | Исходник | `plugins/web-pipeline/agents/security-reviewer.md` |
 
 ## Сначала инструменты
 
-Запускает то, что установлено, по возможности только на изменённых файлах. Результаты используются как зацепки для проверки, а не как вердикты.
+`gitleaks` и `ansible-lint` уже входят в `make check`, а Stop-хук держит его зелёным, поэтому ревьюер их не перезапускает. Он запускает часть `make audit`, ограниченную diff, — то, что установлено. Результаты используются как зацепки для проверки, а не как вердикты.
 
 | Инструмент | Когда |
 |---|---|
 | `semgrep --config auto --error <changed paths>` | Всегда |
-| `gitleaks detect --no-banner --redact` (или `gitleaks git` на диапазоне) | Всегда |
 | `osv-scanner scan source -r .` | Если менялись lock-файлы |
-| `ansible-lint` | Если менялся `deploy/ansible` |
 
 ## Затем вручную
 

@@ -11,7 +11,8 @@ read_hook_input() {
 
 opted_in() { [[ -n ${PROJECT:-} && -f $CONFIG ]]; }
 
-config_get() { jq -r "$1 // empty" "$CONFIG" 2>/dev/null; }
+# `values` drops only null: `// empty` would also swallow false and break boolean settings.
+config_get() { jq -r "$1 | values" "$CONFIG" 2>/dev/null; }
 
 # run_template <template-with-{file}> <file>: runs a project command with the file path shell-quoted.
 run_template() {

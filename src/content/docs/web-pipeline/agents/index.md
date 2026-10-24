@@ -41,14 +41,14 @@ title: "Субагенты"
 | architect | `backend-standards`, `ansible-conventions`, `seo-standards`, `dev-core:reuse-first` |
 | designer | `frontend-style` |
 | backend-dev | `backend-standards`, `testing-standards`, `dev-core:reuse-first` |
-| frontend-dev | `frontend-style`, `seo-standards`, `testing-standards`, `dev-core:reuse-first` |
+| frontend-dev | `frontend-style`, `testing-standards`, `dev-core:reuse-first`; `seo-standards` загружается только в задачах с публичными страницами |
 | qa-engineer | `testing-standards` |
 | code-reviewer | `backend-standards`, `testing-standards`, `dev-core:reuse-first` |
 | security-reviewer | `backend-standards`, `ansible-conventions` |
 | design-critic | `frontend-style`, `seo-standards` |
 | ops-auditor | `ansible-conventions` |
 
-Если навык из конфигурации не попал в контекст, агент сам загружает его инструментом `Skill`.
+Предзагруженные навыки попадают в контекст агента при запуске, в том числе навыки из `dev-core`, поэтому агент не загружает их повторно. frontend-dev загружает `seo-standards` инструментом `Skill` только тогда, когда задача касается публичных страниц.
 
 ## Кто кого вызывает
 
