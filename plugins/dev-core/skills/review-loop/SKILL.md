@@ -14,7 +14,8 @@ Run independent reviewers, fix what matters, and stop. The cap is the point: a l
 - **Fixers**: which subagent fixes which area, such as backend files → `web-pipeline:backend-dev`.
 - **Base**: the snapshot or git ref the work started from.
 - **Context docs**: paths to the spec, architecture and design docs the reviewers check against.
-- **Check command**: the project's quality gate, usually `make check`.
+- **Check command**: the project's quality gate, usually `make check`. Run it quietly, `<check command> > .claude/state/check.log 2>&1; echo $?`, and read only the tail of the log when it fails.
+- **Final reviewer** (optional): one of the reviewers that skips round 2 and instead reviews all the fixes once at the end, such as `web-pipeline:security-reviewer`.
 - **Max rounds**: `$ARGUMENTS` if given, otherwise **2**.
 
 ## State
@@ -22,12 +23,12 @@ Run independent reviewers, fix what matters, and stop. The cap is the point: a l
 Keep state in `.claude/state/review-loop.json` so the cap survives context compaction and session restarts:
 
 ```json
-{ "round": 1, "max_rounds": 2, "base": "<tree>", "round_start": "<tree>", "open": [], "deferred": [] }
+{ "round": 1, "max_rounds": 2, "base": "<tree>", "round_start": "<tree>", "final": "none | pending | done", "open": [], "deferred": [] }
 ```
 
 Take snapshots with `git-snapshot` (shipped in dev-core's `bin/`, so it is on PATH), which prints a git tree hash without touching the index or history. `git diff <a> <b>` compares two snapshots.
 
-If the state file already shows `round > max_rounds`, do not review again. Report the open findings and stop.
+If the state file exists but its `base` differs from the base you were given, it belongs to an earlier run: overwrite it and start at round 1. If it already shows `round > max_rounds` for this base, do not review again: run the final pass if `final` is `pending`, then report the open findings and stop.
 
 ## Verdict format (required from every reviewer)
 
@@ -66,13 +67,22 @@ Severity rules to pass to reviewers:
 ## Round 2: re-review only the fixes
 
 1. Snapshot again. The scope is **only** `git diff <round_start> <new snapshot>`, the fixes.
-2. Reviewers get the fix diff plus the list of round-1 findings. They confirm each finding as resolved or unresolved. They may raise **new** findings only for problems the fix diff itself introduced.
+2. Re-run only the reviewers whose blockers or majors went to fixers in round 1, except the final reviewer. Each gets the fix diff plus its own round-1 findings. It confirms each one as resolved or unresolved, and may raise **new** findings only for problems the fix diff itself introduced. If no reviewer is left to re-run, skip to step 4.
 3. Fix the remaining **blockers only**. Majors and minors go to `deferred`. Run the check command.
-4. Set `round = 3`.
+4. Set `round = 3`, and `final = "pending"` if the caller named a final reviewer (otherwise `"none"`).
+
+## Final pass (only with a final reviewer)
+
+Runs once, after the last fix, when `final` is `pending`:
+
+1. Snapshot again. The scope is `git diff <round_start> <new snapshot>`: every fix from both rounds. If it is empty, skip the pass.
+2. The final reviewer gets that diff plus its own round-1 findings. It confirms each one as resolved or unresolved, and raises new findings only for problems the fixes introduced.
+3. Fix nothing in this pass: the rounds are used up. Its unresolved and new blockers go to the user together with the other unresolved blockers. Its majors and minors go to `deferred`.
+4. Set `final = "done"`.
 
 ## Stop
 
-- Stop after round 2, or earlier when a round has no blockers and no majors.
+- Stop after round 2 and the final pass, or earlier when round 1 has no blockers and no majors: then nothing was fixed, and the final pass is not needed.
 - **Never start round 3 on your own.** Present what is left: unresolved blockers, if any, plus deferred majors. Let the user decide. If they explicitly ask for another round, raise `max_rounds` by one in the state file and run one more round 2-style pass.
 - Append deferred minors to `TODO.md` under a dated heading.
 - Report in a few lines: findings per reviewer, how many were fixed, deferred and dropped, and the final check status.
